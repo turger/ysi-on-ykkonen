@@ -1,33 +1,20 @@
 import React, { Component } from 'react'
 import './App.css'
-import { getStopRoutes, getStopIds, getSchedulesForStop } from './Requests.js'
+import { getSchedulesForStop } from './Requests.js'
 
-const stopName = 'Huutokonttori'
+const STOP_ID = 'HSL:1203406'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      stops: [],
-      ids: []
+      stopTimes: []
     }
-  }
 
-  componentDidMount() {
-    getStopRoutes(stopName).then(stops => {
+    getSchedulesForStop(STOP_ID, 1483362409).then(stopTimes => {
       this.setState({
-        stops: stops
+        stopTimes: stopTimes.stoptimesWithoutPatterns
       })
-    })
-
-    getStopIds(stopName).then(ids => {
-      this.setState({
-        ids: ids
-      })
-    })
-
-    getSchedulesForStop("HSL:1203406", 1483362409).then(stopTimes => {
-      console.log(stopTimes)
     })
   }
 
@@ -35,25 +22,20 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>{stopName}</h2>
+          <h2>HUUTOKONTTORI</h2>
         </div>
-
-        <div>
-            {this.state.stops.map(stop =>
-              <div key={stop.id}><p className="bold">{stop.name}</p>
-
-                {stop.routes.map(route =>
-                  <p key={route.id}>{route.shortName} {route.longName}</p>
-                )}
-
-              </div>
-            )}
-        </div>
-
+        <ul>
+          {this.state.stopTimes.map(stopTime =>
+            <li
+              key={`${stopTime.trip.route.gtfsId}-${stopTime.scheduledArrival}`}
+            >
+              {`${stopTime.trip.route.gtfsId}-${stopTime.scheduledArrival}`}
+            </li>
+          )}
+        </ul>
       </div>
     )
   }
-
 
 }
 

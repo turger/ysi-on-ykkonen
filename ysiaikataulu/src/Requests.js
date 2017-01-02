@@ -47,9 +47,17 @@ export const getSchedulesForStop = (stopId, startTime) =>
   doQuery(`
   {
   stop(id:"${stopId}"){
-  	name
-    stoptimesWithoutPatterns(startTime:"${startTime}",
-      timeRange: 18000, numberOfDepartures:5) {
+    name
+    stoptimesWithoutPatterns(
+      startTime:"${startTime}",
+      timeRange: 18000,
+      numberOfDepartures:5
+    ) {
+      scheduledArrival
+      scheduledDeparture
+      realtimeArrival
+      serviceDay
+      stopHeadsign
       trip {
         route {
           gtfsId
@@ -57,11 +65,6 @@ export const getSchedulesForStop = (stopId, startTime) =>
           shortName
         }
       }
-      scheduledArrival
-      scheduledDeparture
-      realtimeArrival
-      serviceDay
-      stopHeadsign
     }
   }
 }`
