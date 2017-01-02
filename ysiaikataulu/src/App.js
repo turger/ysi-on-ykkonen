@@ -1,46 +1,44 @@
-import React, { Component } from 'react';
-import './App.css';
-var request = require('superagent');
+import React, { Component } from 'react'
+import './App.css'
+import { getStopRoutes, getStopIds, getSchedulesForStop } from './Requests.js'
 
-const stopname = 'Huutokonttori'
-
-// const trams = ['9', '6T']
-// const timetable = trams.map((tram) =>
-//   <li>{tram}</li>
-// );
-
+const stopName = 'Huutokonttori'
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       stops: [],
-    };
+      ids: []
+    }
   }
 
   componentDidMount() {
-    request
-      .post('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql')
-      .set('Content-Type', 'application/graphql')
-      .send('{ stops (name: "' + stopname +'") { id name routes { id longName shortName } } }')
-      .end((err, res) => {
-          if(err) throw err;
-          var result = JSON.parse(res.text).data.stops;
-          console.log(result);
-          this.setState({ stops: result });
-      });
-  }
+    getStopRoutes(stopName).then(stops => {
+      this.setState({
+        stops: stops
+      })
+    })
 
+    getStopIds(stopName).then(ids => {
+      this.setState({
+        ids: ids
+      })
+    })
+
+    getSchedulesForStop("HSL:1203406", 1483362409).then(stopTimes => {
+      console.log(stopTimes)
+    })
+  }
 
   render() {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>{stopname}</h2>
+          <h2>{stopName}</h2>
         </div>
 
         <div>
-          <ul>
             {this.state.stops.map(stop =>
               <div key={stop.id}><p className="bold">{stop.name}</p>
 
@@ -48,17 +46,15 @@ class App extends Component {
                   <p key={route.id}>{route.shortName} {route.longName}</p>
                 )}
 
-
               </div>
             )}
-          </ul>
         </div>
 
       </div>
-    );
+    )
   }
 
 
 }
 
-export default App;
+export default App
