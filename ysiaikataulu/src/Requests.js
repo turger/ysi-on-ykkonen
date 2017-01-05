@@ -20,6 +20,22 @@ const doQuery = query => new Promise(resolve => {
     })
 })
 
+export const getStopsByLocation = (lat, lon) => doQuery(`
+  {
+    stopsByRadius(lat:${lat}, lon:${lon}, radius:500) {
+      edges {
+        node {
+          distance
+          stop {
+            gtfsId
+            name
+          }
+        }
+      }
+    }
+  }`
+).then(res => res.data.stopsByRadius.edges)
+
 export const getStopIds = stopName => doQuery(`
   {
     stops (name: "${stopName}") {

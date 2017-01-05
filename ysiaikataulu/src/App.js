@@ -1,38 +1,40 @@
 import React, { Component } from 'react'
 import './App.css'
-import { getSchedulesForStop } from './Requests.js'
+import Header from './Header'
+import Stop from './Stop'
+import { getSchedulesForStop } from './Requests'
+import NearestStops from './NearestStops'
 
 const STOP_ID = 'HSL:1203406'
+
+const getCurrentTimestamp = () => {
+  const date = new Date()
+  const unixtimestamp = Math.round(date.getTime() / 1000)
+  return unixtimestamp
+}
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      stopTimes: []
+      stopTimes: [],
+      stoptimesWithoutPatterns: [],
     }
 
-    getSchedulesForStop(STOP_ID, 1483362409).then(stopTimes => {
+    getSchedulesForStop(STOP_ID, getCurrentTimestamp()).then(stopTimes => {
       this.setState({
-        stopTimes: stopTimes.stoptimesWithoutPatterns
+        stopTimes: stopTimes,
+        stoptimesWithoutPatterns: stopTimes.stoptimesWithoutPatterns
       })
     })
   }
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <h2>HUUTOKONTTORI</h2>
-        </div>
-        <ul>
-          {this.state.stopTimes.map(stopTime =>
-            <li
-              key={`${stopTime.trip.route.gtfsId}-${stopTime.scheduledArrival}`}
-            >
-              {`${stopTime.trip.route.gtfsId}-${stopTime.scheduledArrival}`}
-            </li>
-          )}
-        </ul>
+      <div className="app">
+        <Header stopName={this.state.stopTimes.name}/>
+        <Stop stops={this.state.stoptimesWithoutPatterns}/>
+        <NearestStops/>
       </div>
     )
   }
