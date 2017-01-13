@@ -7,12 +7,6 @@ import NearestStops from './NearestStops'
 
 const STOP_ID = 'HSL:1203406'
 
-const getCurrentTimestamp = () => {
-  const date = new Date()
-  const unixtimestamp = Math.round(date.getTime() / 1000)
-  return unixtimestamp
-}
-
 class App extends Component {
   constructor(props) {
     super(props)
@@ -21,7 +15,7 @@ class App extends Component {
       stoptimesWithoutPatterns: [],
     }
 
-    getSchedulesForStop(STOP_ID, getCurrentTimestamp()).then(stopTimes => {
+    getSchedulesForStop(STOP_ID).then(stopTimes => {
       this.setState({
         stopTimes: stopTimes,
         stoptimesWithoutPatterns: stopTimes.stoptimesWithoutPatterns

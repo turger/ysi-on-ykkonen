@@ -1,5 +1,11 @@
 import 'whatwg-fetch'
 
+const getCurrentTimestamp = () => {
+  const date = new Date()
+  const unixtimestamp = Math.round(date.getTime() / 1000)
+  return unixtimestamp
+}
+
 const doQuery = query => new Promise(resolve => {
   fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
     method: 'post',
@@ -59,11 +65,12 @@ export const getStopRoutes = stopName => doQuery(`
   }`
 ).then(res => res.data.stops)
 
-export const getSchedulesForStop = (stopId, startTime) =>
+export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =>
   doQuery(`
   {
   stop(id:"${stopId}"){
     name
+    gtfsId
     stoptimesWithoutPatterns(
       startTime:"${startTime}",
       timeRange: 18000,
