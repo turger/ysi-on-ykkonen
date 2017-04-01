@@ -1,0 +1,24 @@
+.Header {
+  background-color: #2F2F2F;
+  height: 40px;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 5px;
+}
+
+.Header h1 {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.Header--themeOne {
+  background-color: #DC7F9B;
+}
+
+.Header--themeTwo {
+  background-color: #5B2A86;
+}
+
+.Header--themeThree {
+  background-color: #94BFA7;
+}

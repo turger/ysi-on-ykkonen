@@ -1,9 +1,6 @@
-.app {
-  text-align: center;
-}
-.app-header {
-  background-color: #222;
-  height: 60px;
-  padding: 5px;
-  color: white;
+.App {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #2F2F2F;
 }

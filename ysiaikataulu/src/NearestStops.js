@@ -28,9 +28,10 @@ class NearestStops extends Component {
     return (
       <div>
         <ul>
+          <h4>Nearest stops:</h4>
           {this.state.nearestStops.map(nearestStop =>
             <li key={`${nearestStop.node.stop.gtfsId}`}>
-              {nearestStop.node.stop.name}
+              {nearestStop.node.stop.name} {nearestStop.node.distance}m {nearestStop.node.stop.gtfsId}
             </li>
           )}
         </ul>

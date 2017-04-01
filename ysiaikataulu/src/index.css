@@ -4,10 +4,6 @@ body {
   font-family: sans-serif;
 }
 
-ul {
-  list-style-type: none;
-}
-
-p.bold {
-    font-weight: bold;
+html, body, #root {
+  height: 100%;
 }

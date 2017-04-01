@@ -1,0 +1,18 @@
+.Stop {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.Stop__box {
+  color: #ffffff;
+  background-color: #2F2F2F;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.Stop__box--time {
+  font-size: 90px;
+  padding-left: 20px;
+}

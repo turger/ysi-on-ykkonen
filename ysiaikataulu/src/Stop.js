@@ -1,21 +1,30 @@
 import React from 'react'
+import './Stop.css'
 
-const readableTime = timestamp => {
-  const theDate = new Date(timestamp * 1000)
-  const hours = ('0' + theDate.getUTCHours()).slice(-2)
-  const minutes = ('0' + theDate.getUTCMinutes()).slice(-2)
-  return `${hours}:${minutes}`
+const minutesToDeparture = departureTimestamp => {
+  const depDate = new Date(departureTimestamp * 1000)
+  const currDate = new Date()
+  const depTimeInMinutes = (depDate.getUTCHours()*60)+depDate.getUTCMinutes()
+  const currTimeInMinutes = (currDate.getHours()*60)+currDate.getMinutes()
+  const minutesToDeparture = depTimeInMinutes-currTimeInMinutes
+  // TO-DO: move hours check to jsx
+  // const hours = Math.floor(minutesToDeparture / (60))
+  // const minutes = Math.floor(minutesToDeparture % (60))
+  return minutesToDeparture
 }
 
 const Stop = ({stops}) => (
-  <ul>
-    {stops.map(stopTime =>
-      <li key={`${stopTime.trip.route.gtfsId}-${stopTime.scheduledArrival}`}>
-        {stopTime.trip.route.shortName} {stopTime.trip.route.longName}
-        {' '}<strong>{readableTime(stopTime.scheduledDeparture)}</strong>
-      </li>
+  <div className="Stop">
+    {stops
+      .slice(0, 2)
+      .map(stopTime =>
+        <div className="Stop__box" key={`${stopTime.trip.route.gtfsId}-${stopTime.scheduledArrival}`}>
+          <div className="Stop__box--time">
+            {stopTime.trip.route.shortName} {minutesToDeparture(stopTime.scheduledDeparture)}min
+          </div>
+        </div>
     )}
-  </ul>
+  </div>
 )
 
 export default Stop

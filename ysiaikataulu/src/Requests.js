@@ -73,14 +73,13 @@ export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =
     gtfsId
     stoptimesWithoutPatterns(
       startTime:"${startTime}",
-      timeRange: 18000,
+      timeRange: 180000,
       numberOfDepartures:5
     ) {
       scheduledArrival
       scheduledDeparture
       realtimeArrival
       serviceDay
-      stopHeadsign
       trip {
         route {
           gtfsId
