@@ -5,7 +5,7 @@
 }
 
 .Stop__box {
-  color: #ffffff;
+  color: #ecf0f1;
   background-color: #2F2F2F;
   height: 100%;
   display: flex;
@@ -22,4 +22,8 @@
 
 .Stop__box--time {
   flex: 1;
+}
+
+.Stop__box--small {
+  font-size: 100px;
 }

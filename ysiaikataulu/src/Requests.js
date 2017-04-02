@@ -3,6 +3,7 @@ import 'whatwg-fetch'
 const getCurrentTimestamp = () => {
   const date = new Date()
   const unixtimestamp = Math.round(date.getTime() / 1000)
+  console.log(unixtimestamp)
   return unixtimestamp
 }
 

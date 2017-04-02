@@ -1,7 +1,7 @@
 .Header {
   background-color: #2F2F2F;
   height: 40px;
-  color: #FFFFFF;
+  color: #ecf0f1;
   text-align: center;
   padding: 5px;
 }
@@ -12,13 +12,13 @@
 }
 
 .Header--themeOne {
-  background-color: #DC7F9B;
+  background-color: #27ae60;
 }
 
 .Header--themeTwo {
-  background-color: #5B2A86;
+  background-color: #2980b9;
 }
 
 .Header--themeThree {
-  background-color: #94BFA7;
+  background-color: #8e44ad;
 }
