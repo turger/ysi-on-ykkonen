@@ -10,9 +10,16 @@
   height: 100%;
   display: flex;
   align-items: center;
+  font-family: 'Play', sans-serif;
+  font-size: 110px;
+}
+
+.Stop__box--name {
+  font-size: 90px;
+  flex: 1;
+  padding-left: 20px;
 }
 
 .Stop__box--time {
-  font-size: 90px;
-  padding-left: 20px;
+  flex: 1;
 }
