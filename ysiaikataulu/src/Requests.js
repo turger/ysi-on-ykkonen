@@ -3,7 +3,6 @@ import 'whatwg-fetch'
 const getCurrentTimestamp = () => {
   const date = new Date()
   const unixtimestamp = Math.round(date.getTime() / 1000)
-  console.log(unixtimestamp)
   return unixtimestamp
 }
 
@@ -75,7 +74,7 @@ export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =
     stoptimesWithoutPatterns(
       startTime:"${startTime}",
       timeRange: 180000,
-      numberOfDepartures:5
+      numberOfDepartures:10
     ) {
       scheduledArrival
       scheduledDeparture
