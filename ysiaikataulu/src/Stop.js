@@ -8,7 +8,7 @@ const Stop = ({stops}) => (
     {stops
       .filter(stopTime =>
         !Number.isInteger(minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)) ||
-        minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay) >= 5)
+        minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay) > 4)
       .slice(0, 2)
       .map(stopTime =>
         <div className="Stop__box" key={`${stopTime.trip.route.gtfsId}-${stopTime.realtimeArrival}`}>

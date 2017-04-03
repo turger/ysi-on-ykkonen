@@ -74,7 +74,7 @@ export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =
     stoptimesWithoutPatterns(
       startTime:"${startTime}",
       timeRange: 180000,
-      numberOfDepartures:10
+      numberOfDepartures:15
     ) {
       scheduledArrival
       scheduledDeparture
