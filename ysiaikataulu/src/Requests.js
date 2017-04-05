@@ -1,4 +1,21 @@
 import 'whatwg-fetch'
+import { API_KEY } from './config.js'
+
+export const getWeatherData = () => new Promise(resolve => {
+  fetch(`http://api.openweathermap.org/data/2.5/weather?id=658226&APPID=${API_KEY}&units=metric`)
+    .then(res => {
+      if (res.status !== 200) throw new Error(res.status)
+      return res.json()
+    })
+    .then(res => {
+      resolve(res)
+    })
+    .catch(err => {
+      console.warn(err)
+    })
+})
+
+
 
 const getCurrentTimestamp = () => {
   const date = new Date()
