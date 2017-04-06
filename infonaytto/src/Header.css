@@ -1,0 +1,32 @@
+.Header {
+  background-color: #2F2F2F;
+  height: 50px;
+  color: #ecf0f1;
+  padding: 5px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.Header h1 {
+  margin: 0;
+  padding-top: 6px;
+  text-transform: uppercase;
+  font-family: 'Aldrich', sans-serif;
+  letter-spacing: 2px;
+  font-size: 40px;
+}
+
+.Header--themeOne {
+  background-color: #2980b9;
+}
+
+.Header--themeTwo {
+  background-color: #27ae60;
+}
+
+.Header--themeThree {
+  background-color: #8e44ad;
+}
