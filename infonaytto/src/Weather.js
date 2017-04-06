@@ -1,12 +1,31 @@
-import React from 'react'
-import './Weather.css'
+import React, { Component } from 'react'
 import Emoji from './Emoji'
+import weatherEmojis from './weatherEmojis'
+import './Weather.css'
 
-const Weather = ({ weatherData }) => (
-  <div className="Weather">
-    { weatherData.main.temp }° { weatherData.weather[0].icon }
-    <Emoji name=":cloud:" />
-  </div>
-)
+class Weather extends Component {
+  chooseIcon(temp, icon) {
+    if (temp > 20 && (icon === '01d' || icon === '01n')) {
+      return ":fire:"
+    } else if (temp <= -10 && (icon === '13d' || icon === '13n')) {
+      return ":snowman"
+    } else {
+      return weatherEmojis[icon]
+    }
+  }
+
+  render() {
+    const { weatherData } = this.props
+    const temp = weatherData.main.temp
+    const icon = weatherData.weather[0].icon
+    return (
+      <div className="Weather">
+        { temp }°
+        <Emoji name={ this.chooseIcon(temp, icon) }/>
+      </div>
+    )
+  }
+
+}
 
 export default Weather

@@ -3,13 +3,13 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #ffffff;
+  color: #ecf0f1;
   font-family: 'Play', sans-serif;
   font-size: 110px;
 }
 
 .Weather img {
-  height: 110px;
+  height: 90px;
   padding-top: 30px;
   padding-left: 30px;
 }
