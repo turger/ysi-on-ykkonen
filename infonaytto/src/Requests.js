@@ -1,5 +1,6 @@
 import 'whatwg-fetch'
-import { API_KEY } from './config.js'
+
+export const API_KEY = process.env.REACT_APP_KEY
 
 export const getWeatherData = () => new Promise(resolve => {
   fetch(`http://api.openweathermap.org/data/2.5/weather?id=658226&APPID=${API_KEY}&units=metric`)
