@@ -8,7 +8,7 @@ class Weather extends Component {
     if (temp > 20 && (icon === '01d' || icon === '01n')) {
       return ":fire:"
     } else if (temp <= -10 && (icon === '13d' || icon === '13n')) {
-      return ":snowman"
+      return ":snowman2:"
     } else {
       return weatherEmojis[icon]
     }
