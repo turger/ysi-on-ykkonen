@@ -7,7 +7,6 @@ import { getSchedulesForStop, getWeatherData } from './Requests'
 
 const PK_STOP_ID = 'HSL:1220127'
 const VV_STOP_ID = 'HSL:1220411'
-const HT_STOP_ID = 'HSL:1220416'
 
 class App extends Component {
   constructor(props) {
@@ -20,23 +19,22 @@ class App extends Component {
 
   componentDidMount() {
     this.getData()
-    this.getWeatherData(3)
+    this.getWeatherData(2)
     setInterval(() => {
-      let view = this.state.view === 3 ? 0 : this.state.view + 1
+      let view = this.state.view === 2 ? 0 : this.state.view + 1
       this.setState({ view })
     } , 2000)
     setInterval(() => {
       this.getData()
     } , 60000)
     setInterval(() => {
-      this.getWeatherData(3)
+      this.getWeatherData(2)
     } , 600000)
   }
 
   getData() {
     this.getDataForStop(PK_STOP_ID, 0)
     this.getDataForStop(VV_STOP_ID, 1)
-    this.getDataForStop(HT_STOP_ID, 2)
   }
 
   getDataForStop(stopId, viewId) {
