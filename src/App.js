@@ -4,9 +4,7 @@ import Header from './Header'
 import Stop from './Stop'
 import Weather from './Weather'
 import { getSchedulesForStop, getWeatherData } from './Requests'
-
-const PK_STOP_ID = 'HSL:1220127'
-const VV_STOP_ID = 'HSL:1220411'
+import { StopIds } from './StopConfig'
 
 class App extends Component {
   constructor(props) {
@@ -14,42 +12,44 @@ class App extends Component {
     this.state = {
       viewData: {},
       view: 0,
+      viewCount: 0,
     }
   }
 
   componentDidMount() {
-    this.getData()
-    this.getWeatherData(2)
+    this.getWeatherData()
+    this.getStopsData()
     setInterval(() => {
-      let view = this.state.view === 2 ? 0 : this.state.view + 1
+      let view = this.state.view === this.state.viewCount - 1 ? 0 : this.state.view + 1
       this.setState({ view })
     } , 2000)
     setInterval(() => {
-      this.getData()
+      this.getStopsData()
     } , 60000)
     setInterval(() => {
-      this.getWeatherData(2)
+      this.getWeatherData()
     } , 600000)
   }
 
-  getData() {
-    this.getDataForStop(PK_STOP_ID, 0)
-    this.getDataForStop(VV_STOP_ID, 1)
+  getStopsData() {
+    let i = 1
+    StopIds.map(stopId =>
+      getSchedulesForStop(stopId).then(stopTimes => {
+        let viewData = this.state.viewData
+        viewData[i] = stopTimes
+        this.setState({ viewData })
+        this.setState({ viewCount: this.state.viewCount + 1 })
+        i += 1
+      })
+    )
   }
 
-  getDataForStop(stopId, viewId) {
-    getSchedulesForStop(stopId).then(stopTimes => {
-      let viewData = this.state.viewData
-      viewData[viewId] = stopTimes
-      this.setState({ viewData })
-    })
-  }
-
-  getWeatherData(viewId) {
+  getWeatherData() {
     getWeatherData().then(weatherData => {
       let viewData = this.state.viewData
-      viewData[viewId] = weatherData
+      viewData[0] = weatherData
       this.setState({ viewData })
+      this.setState({ viewCount: this.state.viewCount + 1 })
     })
   }
 
