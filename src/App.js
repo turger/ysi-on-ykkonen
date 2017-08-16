@@ -12,14 +12,14 @@ class App extends Component {
     this.state = {
       weatherData: null,
       stopsData: {},
-      time: null,
+      datetime: null,
     }
   }
 
   componentDidMount() {
     this.getWeatherData()
     this.getStopsData()
-    this.getTime()
+    this.setTime()
     setInterval(() => {
       this.getStopsData()
     } , 60000)
@@ -27,7 +27,7 @@ class App extends Component {
       this.getWeatherData()
     } , 600000)
     setInterval(() => {
-      this.getTime()
+      this.setTime()
     } , 1000)
   }
 
@@ -47,20 +47,16 @@ class App extends Component {
     })
   }
 
-  getTime() {
-    const currentdate = new Date()
-    const hours = currentdate.getUTCHours()
-    const minutes = currentdate.getUTCMinutes()
-    const time = hours + ':' + minutes
-    this.setState({ time })
+  setTime() {
+    this.setState({ datetime: new Date() })
   }
 
   render() {
-    if (!this.state.weatherData || !this.state.stopsData) return null
+    if (!this.state.weatherData || !this.state.stopsData || !this.state.datetime) return null
     return (
       <div className="App" >
         <div className="App_leftcolumn">
-          <Time time={ this.state.time }/>
+          <Time datetime={ this.state.datetime }/>
           <Weather weatherData={ this.state.weatherData }/>
         </div>
         <Stops stops={ this.state.stopsData }/>
