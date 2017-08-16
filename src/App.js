@@ -52,6 +52,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.datetime)
     if (!this.state.weatherData || !this.state.stopsData || !this.state.datetime) return null
     return (
       <div className="App" >

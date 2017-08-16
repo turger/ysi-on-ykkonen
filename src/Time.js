@@ -2,8 +2,8 @@ import React from 'react'
 import './Time.css'
 
 const formatTime = datetime => {
-  const hours = datetime.getUTCHours()
-  const minutes = ('0' + datetime.getUTCMinutes()).slice(-2)
+  const hours = datetime.getHours()
+  const minutes = ('0' + datetime.getMinutes()).slice(-2)
   return hours + ':' + minutes
 }
 

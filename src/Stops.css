@@ -11,8 +11,6 @@
 .Stops__times {
   display: flex;
   flex-flow: row;
-}
-
-.Stops .emojione {
-  padding-top: 10px;
+  align-items: center;
+  justify-content: center;
 }

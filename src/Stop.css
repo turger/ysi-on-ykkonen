@@ -13,12 +13,12 @@
   flex-flow: row;
   align-items: center;
   font-family: 'Play', sans-serif;
-  font-size: 60px;
-  width: 200px;
+  font-size: 40px;
+  width: 150px;
 }
 
 .Stop__box--name {
-  font-size: 40px;
+  font-size: 30px;
   flex: 1;
 }
 
@@ -30,5 +30,5 @@
 }
 
 .Stop__box--small {
-  font-size: 55px;
+  font-size: 35px;
 }
