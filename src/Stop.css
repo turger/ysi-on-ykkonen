@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: column;
   height: 100%;
-  padding-left: 30px;
+  padding-left: 15px;
 }
 
 .Stop__box {
@@ -14,8 +14,7 @@
   align-items: center;
   font-family: 'Play', sans-serif;
   font-size: 60px;
-  width: 250px;
-  height: 80px;
+  width: 200px;
 }
 
 .Stop__box--name {
@@ -24,7 +23,10 @@
 }
 
 .Stop__box--time {
-  flex: 1;
+  display: flex;
+  flex: 2;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .Stop__box--small {

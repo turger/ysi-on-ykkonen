@@ -2,7 +2,8 @@
   display: flex;
   flex: 1;
   flex-flow: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   padding: 10px;
 }
