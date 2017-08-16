@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       viewData: {},
       view: 0,
-      viewCount: 0,
+      viewCount: StopIds.length + 1,
     }
   }
 
@@ -38,7 +38,6 @@ class App extends Component {
         let viewData = this.state.viewData
         viewData[i] = stopTimes
         this.setState({ viewData })
-        this.setState({ viewCount: this.state.viewCount + 1 })
         i += 1
       })
     )
@@ -49,7 +48,6 @@ class App extends Component {
       let viewData = this.state.viewData
       viewData[0] = weatherData
       this.setState({ viewData })
-      this.setState({ viewCount: this.state.viewCount + 1 })
     })
   }
 
