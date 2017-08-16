@@ -1,4 +1,4 @@
-.Weather {
+.Time {
   display: flex;
   flex: 1;
   align-items: center;
@@ -7,10 +7,4 @@
   color: #ecf0f1;
   font-family: 'Play', sans-serif;
   font-size: 110px;
-}
-
-.Weather img {
-  height: 90px;
-  padding-top: 30px;
-  padding-left: 30px;
 }

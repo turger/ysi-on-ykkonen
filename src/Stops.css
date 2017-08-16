@@ -1,0 +1,17 @@
+.Stops {
+  display: flex;
+  flex: 1;
+  flex-flow: column;
+  align-items: flex-end;
+  width: 100%;
+  padding: 10px;
+}
+
+.Stops__times {
+  display: flex;
+  flex-flow: row;
+}
+
+.Stops .emojione {
+  padding-top: 10px;
+}

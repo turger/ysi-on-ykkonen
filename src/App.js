@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import './App.css'
-import Header from './Header'
-import Stop from './Stop'
+import Stops from './Stops'
 import Weather from './Weather'
+import Time from './Time'
 import { getSchedulesForStop, getWeatherData } from './Requests'
 import { StopIds } from './StopConfig'
 
@@ -10,61 +10,60 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      viewData: {},
-      view: 0,
-      viewCount: StopIds.length + 1,
+      weatherData: null,
+      stopsData: {},
+      time: null,
     }
   }
 
   componentDidMount() {
     this.getWeatherData()
     this.getStopsData()
-    setInterval(() => {
-      let view = this.state.view === this.state.viewCount - 1 ? 0 : this.state.view + 1
-      this.setState({ view })
-    } , 2000)
+    this.getTime()
     setInterval(() => {
       this.getStopsData()
     } , 60000)
     setInterval(() => {
       this.getWeatherData()
     } , 600000)
+    setInterval(() => {
+      this.getTime()
+    } , 1000)
   }
 
   getStopsData() {
-    let i = 1
-    StopIds.map(stopId =>
-      getSchedulesForStop(stopId).then(stopTimes => {
-        let viewData = this.state.viewData
-        viewData[i] = stopTimes
-        this.setState({ viewData })
-        i += 1
+    Object.keys(StopIds).map(key =>
+      getSchedulesForStop(StopIds[key]).then(stopTimes => {
+        let stopsData = this.state.stopsData
+        stopsData[key] = stopTimes
+        this.setState({ stopsData })
       })
     )
   }
 
   getWeatherData() {
     getWeatherData().then(weatherData => {
-      let viewData = this.state.viewData
-      viewData[0] = weatherData
-      this.setState({ viewData })
+      this.setState({ weatherData })
     })
   }
 
+  getTime() {
+    const currentdate = new Date()
+    const hours = currentdate.getUTCHours()
+    const minutes = currentdate.getUTCMinutes()
+    const time = hours + ':' + minutes
+    this.setState({ time })
+  }
+
   render() {
-    if (!this.state.viewData[this.state.view]) return null
-    const data = this.state.viewData[this.state.view]
+    if (!this.state.weatherData || !this.state.stopsData) return null
     return (
       <div className="App" >
-        { data.stoptimesWithoutPatterns &&
-          <div>
-            <Header stopName={data.name} view={this.state.view}/>
-            <Stop stops={data.stoptimesWithoutPatterns}/>
-          </div>
-        }
-        { data.weather &&
-          <Weather weatherData={ data }/>
-        }
+        <div className="App_leftcolumn">
+          <Time time={ this.state.time }/>
+          <Weather weatherData={ this.state.weatherData }/>
+        </div>
+        <Stops stops={ this.state.stopsData }/>
       </div>
     )
   }

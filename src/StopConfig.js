@@ -1,4 +1,6 @@
 // Paavalinkirkko HSL:1220127
 // Vallilan varikko = HSL:1220411
 // Hattulantie HSL:1220417
-export const StopIds = [ 'HSL:1220127', 'HSL:1220411', 'HSL:1220417' ]
+
+// {emoji-one-name: hsl-stop-id}
+export const StopIds = { 'church':'HSL:1220127', 'train':'HSL:1220411', 'tophat':'HSL:1220417' }
