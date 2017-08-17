@@ -11,9 +11,9 @@
 .Stops__times {
   display: flex;
   flex-flow: column;
-  padding-top: 10px;
 }
 
 .Stops img {
   height: 40px;
+  padding-top: 10px;
 }
