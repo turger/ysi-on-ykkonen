@@ -27,7 +27,6 @@ class Time extends Component {
   }
 
   render() {
-    console.log(this.state.datetime)
     if (!this.state.datetime) return null
     return (
       <div className="Time">

@@ -55,7 +55,6 @@ class Weather extends Component {
     const weatherType = this.props.type
     if (!this.state.weatherData) return null
     const weatherData = this.state.weatherData
-    console.log('Weather', weatherData, weatherType)
     return (
       <div className={classNames('Weather',
         {'Weather--small': weatherType === 'current',

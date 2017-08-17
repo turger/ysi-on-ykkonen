@@ -31,7 +31,6 @@ class Stops extends Component {
   }
 
   render() {
-    console.log('Stops', this.state.stopsData)
     if (!this.state.stopsData) return null
     const stops = this.state.stopsData
     return (
