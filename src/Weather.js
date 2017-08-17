@@ -5,13 +5,6 @@ import weatherEmojis from './weatherEmojis'
 import './Weather.css'
 import { getWeatherData } from './Requests'
 
-const formatDay = timestamp => {
-  const datetime = new Date(timestamp*1000)
-  const day = datetime.getDate()
-  const month = datetime.getMonth()+1
-  return `${day}.${month}.`
-}
-
 const formatTime = timestamp => {
   const datetime = new Date(timestamp*1000)
   const hours = datetime.getHours()
@@ -72,7 +65,6 @@ class Weather extends Component {
                 .slice(0, 8)
                 .map(weather =>
                   <div className="Weather__5days__box" key={weather.dt}>
-                    <div className="Weather__5days__day">{formatDay(weather.dt)}</div>
                     <div className="Weather__5days__time">{formatTime(weather.dt)}</div>
                     <div className="Weather__5days__temp">{ Math.round(weather.main.temp) }°</div>
                     <Emoji name={ this.chooseIcon(Math.round(weather.main.temp), weather.weather[0].icon) }/>

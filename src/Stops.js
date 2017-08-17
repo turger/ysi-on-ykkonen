@@ -39,7 +39,7 @@ class Stops extends Component {
           .sort((a, b) => a > b)
           .map( key =>
           <div className="Stops__times" key={key}>
-            <Emoji name={ ':' + key + ':' }/>
+            <Emoji name={ `:${key}:` }/>
             <Stop stops={ stops[key].stoptimesWithoutPatterns }/>
           </div>
           )

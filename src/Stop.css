@@ -1,8 +1,7 @@
 .Stop {
   display: flex;
-  flex-flow: column;
+  flex-flow: row;
   height: 100%;
-  padding: 0 5px;
 }
 
 .Stop__box {
@@ -10,16 +9,17 @@
   background-color: #2F2F2F;
   height: 100%;
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   align-items: center;
   font-family: 'Play', sans-serif;
   font-size: 30px;
-  width: 110px;
+  width: 70px;
 }
 
 .Stop__box--name {
   font-size: 20px;
   flex: 1;
+  color: #c4d0d4;
 }
 
 .Stop__box--time {

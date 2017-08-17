@@ -18,7 +18,7 @@ class Emoji extends Component {
   }
 
   render() {
-    return <div ref={dom => this._dom = dom} />
+    return <div className="Emoji" ref={dom => this._dom = dom} />
   }
 }
 
