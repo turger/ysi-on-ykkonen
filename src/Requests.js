@@ -2,8 +2,9 @@ import 'whatwg-fetch'
 
 export const API_KEY = process.env.REACT_APP_KEY
 
-export const getWeatherData = () => new Promise(resolve => {
-  fetch(`http://api.openweathermap.org/data/2.5/weather?id=658226&APPID=${API_KEY}&units=metric`)
+export const getWeatherData = (type) => new Promise(resolve => {
+  const weatherType = type === 'current' ? 'weather' : 'forecast'
+  fetch(`http://api.openweathermap.org/data/2.5/${weatherType}?id=658226&APPID=${API_KEY}&units=metric`)
     .then(res => {
       if (res.status !== 200) throw new Error(res.status)
       return res.json()
@@ -15,8 +16,6 @@ export const getWeatherData = () => new Promise(resolve => {
       console.warn(err)
     })
 })
-
-
 
 const getCurrentTimestamp = () => {
   const date = new Date()

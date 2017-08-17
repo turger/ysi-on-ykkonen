@@ -1,16 +1,19 @@
 .Stops {
   display: flex;
-  flex: 1;
-  flex-flow: column;
+  flex: 3;
+  flex-flow: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   width: 100%;
-  padding: 10px;
+  height: 100%;
 }
 
 .Stops__times {
   display: flex;
-  flex-flow: row;
-  align-items: center;
-  justify-content: center;
+  flex-flow: column;
+  padding-top: 10px;
+}
+
+.Stops img {
+  height: 40px;
 }
