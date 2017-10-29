@@ -47,10 +47,10 @@ class Weather extends Component {
     }
   }
 
-  renderWeatherItem(weather) {
+  renderWeatherItem(weather, current) {
     return (
       <div className="Weather__item__box" key={weather.dt}>
-        <div className="Weather__item__time">{formatTime(weather.dt)}</div>
+        <div className="Weather__item__time">{ current ? 'NOW' : formatTime(weather.dt)}</div>
         <div className="Weather__item__temp">{ Math.round(weather.main.temp) }°</div>
         <Emoji name={ this.chooseIcon(Math.round(weather.main.temp), weather.weather[0].icon) }/>
       </div>
@@ -64,7 +64,7 @@ class Weather extends Component {
     return (
       <div className="Weather Weather__item">
          <div className="Weather__item">
-          { this.renderWeatherItem(currentWeather) }
+          { this.renderWeatherItem(currentWeather, 'current') }
            { forecast.list
               .slice(0, 7)
               .map(weather => this.renderWeatherItem(weather))
