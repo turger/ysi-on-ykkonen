@@ -8,30 +8,9 @@
   width: 100%;
 }
 
-.Weather--small {
-  flex: 1;
-}
-
-.Weather--big {
+.Weather__item {
+  display: flex;
   flex: 3;
-}
-
-.Weather__current {
-  display: flex;
-  flex-flow: row;
-  font-size: 40px;
-  align-items: center;
-  justify-content: center;
-}
-
-.Weather__current img {
-  height: 30px;
-  padding-top: 10px;
-  padding-left: 10px;
-}
-
-.Weather__5days {
-  display: flex;
   flex-flow: row;
   font-size: 20px;
   justify-content: space-around;
@@ -40,24 +19,24 @@
   height: 80%;
 }
 
-.Weather__5days__box {
+.Weather__item__box {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.Weather__5days__time {
+.Weather__item__time {
   font-size: 16px;
   color: #98adb3;
 }
 
-.Weather__5days__temp {
+.Weather__item__temp {
   font-size: 20px;
   color: #c4d0d4;
 }
 
-.Weather__5days img {
+.Weather__item img {
   height: 25px;
   padding-top: 2px;
 }

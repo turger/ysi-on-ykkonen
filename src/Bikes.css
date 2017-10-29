@@ -1,0 +1,17 @@
+.Bikes {
+  display: flex;
+  flex: 1;
+  flex-flow: row;
+  font-size: 35px;
+  align-items: center;
+  justify-content: center;
+  color: #c4d0d4;
+  font-family: 'Play', sans-serif;
+  width: 100%;
+}
+
+.Bikes img {
+  height: 40px;
+  padding-top: 10px;
+  padding-left: 10px;
+}

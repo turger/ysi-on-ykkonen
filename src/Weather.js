@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Emoji from './Emoji'
-import classNames from 'classnames'
 import weatherEmojis from './weatherEmojis'
 import './Weather.css'
 import { getWeatherData } from './Requests'
@@ -16,7 +15,8 @@ class Weather extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      weatherData: null,
+      forecast: null,
+      currentWeather: null
     }
   }
 
@@ -28,8 +28,11 @@ class Weather extends Component {
   }
 
   getCurrentWeatherData(weatherType) {
-    getWeatherData(weatherType).then(weatherData => {
-      this.setState({ weatherData })
+    getWeatherData('5days').then(forecast => {
+      this.setState({ forecast })
+      getWeatherData('current').then(currentWeather => {
+        this.setState({ currentWeather })
+      })
     })
   }
 
@@ -44,35 +47,29 @@ class Weather extends Component {
     }
   }
 
-  render() {
-    const weatherType = this.props.type
-    if (!this.state.weatherData) return null
-    const weatherData = this.state.weatherData
+  renderWeatherItem(weather) {
     return (
-      <div className={classNames('Weather',
-        {'Weather--small': weatherType === 'current',
-        'Weather--big': weatherType === '5days'}
-      )}>
-      { weatherType === 'current' &&
-          <div className="Weather__current">
-            { weatherData.main.temp }°
-            <Emoji name={ this.chooseIcon(weatherData.main.temp, weatherData.weather[0].icon) }/>
-          </div>
-       }
-       { weatherType === '5days' &&
-           <div className="Weather__5days">
-             { weatherData.list
-                .slice(0, 8)
-                .map(weather =>
-                  <div className="Weather__5days__box" key={weather.dt}>
-                    <div className="Weather__5days__time">{formatTime(weather.dt)}</div>
-                    <div className="Weather__5days__temp">{ Math.round(weather.main.temp) }°</div>
-                    <Emoji name={ this.chooseIcon(Math.round(weather.main.temp), weather.weather[0].icon) }/>
-                  </div>
-               )
-             }
-           </div>
-        }
+      <div className="Weather__item__box" key={weather.dt}>
+        <div className="Weather__item__time">{formatTime(weather.dt)}</div>
+        <div className="Weather__item__temp">{ Math.round(weather.main.temp) }°</div>
+        <Emoji name={ this.chooseIcon(Math.round(weather.main.temp), weather.weather[0].icon) }/>
+      </div>
+    )
+  }
+
+  render() {
+    if (!this.state.forecast || !this.state.currentWeather) return null
+    const forecast = this.state.forecast
+    const currentWeather = this.state.currentWeather
+    return (
+      <div className="Weather Weather__item">
+         <div className="Weather__item">
+          { this.renderWeatherItem(currentWeather) }
+           { forecast.list
+              .slice(0, 7)
+              .map(weather => this.renderWeatherItem(weather))
+           }
+         </div>
        </div>
     )
   }

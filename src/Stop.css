@@ -20,6 +20,12 @@
   font-size: 20px;
   flex: 1;
   color: #c4d0d4;
+  border: solid #c4d0d4 2px;
+  border-radius: 5px;
+  min-width: 30px;
+  text-align: center;
+  padding: 1px 3px;
+  margin: 3px;
 }
 
 .Stop__box--time {

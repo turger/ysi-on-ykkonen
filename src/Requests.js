@@ -43,6 +43,20 @@ const doQuery = query => new Promise(resolve => {
     })
 })
 
+export const getBikes = (id) => doQuery(`
+  {
+    bikeRentalStation(id:"${id}") {
+      stationId
+      name
+      bikesAvailable
+      spacesAvailable
+      lat
+      lon
+      allowDropoff
+    }
+  }`
+).then(res => res.data.bikeRentalStation)
+
 export const getStopsByLocation = (lat, lon) => doQuery(`
   {
     stopsByRadius(lat:${lat}, lon:${lon}, radius:500) {
