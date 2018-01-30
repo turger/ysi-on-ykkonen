@@ -1,17 +1,56 @@
 .Bikes {
   display: flex;
-  flex: 1;
+  flex: 2;
+  flex-flow: column;
+  width: 100%;
+  justify-content: center;
+}
+
+.Bikes__availability {
+  display: flex;
   flex-flow: row;
-  font-size: 35px;
   align-items: center;
   justify-content: center;
-  color: #c4d0d4;
   font-family: 'Play', sans-serif;
   width: 100%;
 }
 
 .Bikes img {
-  height: 40px;
+  height: 30px;
   padding-top: 10px;
   padding-left: 10px;
+  margin-left: 20px;
+}
+
+.Bikes__box {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  margin: 0 15px;
+}
+
+.Bikes__box__available {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(#ffffff, #c4d0d4, #89a1a9);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 30px;
+}
+
+.Bikes__box__stop {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  width: 35px;
+  right: -15px;
+  top: -15px;
+  border-radius: 50%;
+  background: radial-gradient(#8aa2a8, #98adb3, #a7b9be);
+  font-size: 20px;
+  text-align: center;
 }

@@ -10,7 +10,7 @@ const Stop = ({stops}) => (
         const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
         return(!Number.isInteger(timeToDeparture) ||timeToDeparture > 4)}
       )
-      .slice(0, 2)
+      .slice(0, 3)
       .map(stopTime => {
         const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
         return(

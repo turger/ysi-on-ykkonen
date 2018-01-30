@@ -9,8 +9,19 @@
 .App_topRow {
   display: flex;
   flex-direction: row;
-  flex: 2;
+  flex: 1;
   align-items: center;
   justify-content: center;
   background: linear-gradient(#595959, #404040, #2F2F2F);
+}
+
+.App_middleRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex: 2;
+}
+
+.App_bottomRow {
+  margin-bottom: 5px;
 }

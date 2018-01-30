@@ -9,10 +9,14 @@ const App = () => (
   <div className="App" >
     <div className="App_topRow">
       <Time/>
+    </div>
+    <div className="App_middleRow">
+      <Stops/>
       <Bikes/>
     </div>
-    <Stops/>
-    <Weather/>
+    <div className="App_bottomRow">
+      <Weather/>
+    </div>
   </div>
 )
 

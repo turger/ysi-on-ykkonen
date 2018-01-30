@@ -1,6 +1,6 @@
 .Stops {
   display: flex;
-  flex: 3;
+  flex: 2;
   flex-flow: row;
   align-items: center;
   justify-content: space-around;

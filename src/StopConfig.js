@@ -1,8 +1,8 @@
-// Paavalinkirkko HSL:1220127
-// Vallilan varikko = HSL:1220411
-// Hattulantie HSL:1220417
+// Lauttasaaren silta HSL:1310102
 // {emoji-one-name: hsl-stop-id}
-export const StopIds = { 'church':'HSL:1220127', 'train':'HSL:1220411', 'tophat':'HSL:1220417' }
+export const StopIds = { 'bus':'HSL:1310102' }
 
-// Paavalinpuisto bike stop id = 133
-export const BikeStopId = 133
+// Lauttasaaren silta bike stop id = 058
+// Lauttasaaren ostoskeskus bike stop id = 057
+// {stop-name-initial: hsl-stop-id}
+export const BikeStopIds = { 'S':'058', 'M':'057' }
