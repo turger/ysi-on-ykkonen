@@ -22,7 +22,6 @@ class Bikes extends Component {
   getBikesData() {
     Object.keys(BikeStopIds).map(key =>
       getBikes(BikeStopIds[key]).then(bikeStopTimes => {
-        console.log(key)
         let bikesData = this.state.bikesData
         bikesData[key] = bikeStopTimes
         this.setState({ bikesData })

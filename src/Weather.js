@@ -4,11 +4,10 @@ import weatherEmojis from './weatherEmojis'
 import './Weather.css'
 import { getWeatherData } from './Requests'
 
-const formatTime = timestamp => {
-  const datetime = new Date(timestamp*1000)
-  const hours = datetime.getHours()
-  const minutes = ('0' + datetime.getMinutes()).slice(-2)
-  return `${hours}:${minutes}`
+const formatTime = timestamptxt => {
+  console.log(timestamptxt)
+  const time = timestamptxt.split(' ')[1].slice(0, -3);
+  return time
 }
 
 class Weather extends Component {
@@ -16,23 +15,19 @@ class Weather extends Component {
     super(props)
     this.state = {
       forecast: null,
-      currentWeather: null
     }
   }
 
   componentDidMount() {
-    this.getCurrentWeatherData(this.props.type)
+    this.getCurrentWeatherData()
     setInterval(() => {
       this.getCurrentWeatherData()
     } , 600000)
   }
 
   getCurrentWeatherData(weatherType) {
-    getWeatherData('5days').then(forecast => {
+    getWeatherData().then(forecast => {
       this.setState({ forecast })
-      getWeatherData('current').then(currentWeather => {
-        this.setState({ currentWeather })
-      })
     })
   }
 
@@ -47,10 +42,10 @@ class Weather extends Component {
     }
   }
 
-  renderWeatherItem(weather, current) {
+  renderWeatherItem(weather) {
     return (
       <div className="Weather__item__box" key={weather.dt}>
-        <div className="Weather__item__time">{ current ? 'NOW' : formatTime(weather.dt)}</div>
+        <div className="Weather__item__time">{ formatTime(weather.dt_txt)}</div>
         <div className="Weather__item__temp">{ Math.round(weather.main.temp) }°</div>
         <Emoji name={ this.chooseIcon(Math.round(weather.main.temp), weather.weather[0].icon) }/>
       </div>
@@ -58,13 +53,12 @@ class Weather extends Component {
   }
 
   render() {
-    if (!this.state.forecast || !this.state.currentWeather) return null
+    if (!this.state.forecast) return null
     const forecast = this.state.forecast
-    const currentWeather = this.state.currentWeather
+    console.log(forecast)
     return (
       <div className="Weather Weather__item">
          <div className="Weather__item">
-          { this.renderWeatherItem(currentWeather, 'current') }
            { forecast.list
               .slice(0, 7)
               .map(weather => this.renderWeatherItem(weather))
