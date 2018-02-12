@@ -30,7 +30,7 @@ Then create .env file to project root and add row:
 REACT_APP_KEY = '<insert-key-here>'
 ```
 
-### Building & starting project
+### Start app
 
 First clone project then
 

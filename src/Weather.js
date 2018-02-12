@@ -5,7 +5,6 @@ import './Weather.css'
 import { getWeatherData } from './Requests'
 
 const formatTime = timestamptxt => {
-  console.log(timestamptxt)
   const time = timestamptxt.split(' ')[1].slice(0, -3);
   return time
 }
@@ -55,7 +54,6 @@ class Weather extends Component {
   render() {
     if (!this.state.forecast) return null
     const forecast = this.state.forecast
-    console.log(forecast)
     return (
       <div className="Weather Weather__item">
          <div className="Weather__item">
