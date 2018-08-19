@@ -7,8 +7,10 @@ import DateTime from './DateTime'
 
 const App = () => (
   <div className="App" >
-    <DateTime/>
-    <Bikes/>
+    <div className="App__top">
+      <DateTime/>
+      <Bikes/>
+    </div>
     <Stops/>
     <Weather/>
   </div>

@@ -1,20 +1,20 @@
 .Stops {
-  grid-area: stops;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
   color: #ffffff;
 }
 
 .Stops__box {
-  display: grid;
-  grid-template-rows: 1fr 3fr;
   align-items: center;
   background: #fa5e7b;
   padding: 5px;
+  margin: 5px 10px 5px 5px;
+  width: 100%;
 }
 
 .Stops__box:first-child {
+  margin: 5px 5px 5px 10px;
   background: #1f9ca0;
 }
 

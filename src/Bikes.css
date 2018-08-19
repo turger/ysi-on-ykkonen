@@ -3,17 +3,16 @@
 }
 
 .Bikes {
-  grid-area: bikes;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex: 1;
   background: #2d3947;
   color: #d4e2e6;
+  margin: 10px 10px 5px 5px;
 }
 
 .BikeStop {
+  width: 50%;
   position: relative;
-  display: grid;
-  align-items: center;
 }
 
 .BikeStop__availability {

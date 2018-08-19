@@ -1,11 +1,11 @@
 .Weather {
-  grid-area: weather;
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
   color: #ecf0f1;
   background: #2d3947;
-  padding: 5px;
+  margin: 5px 10px 10px 10px;
 }
 
 .Weather__item {

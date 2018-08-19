@@ -1,21 +1,23 @@
 .Stop__route {
-  display: grid;
-  grid-template-columns: 1fr 2fr 6fr 2fr;
+  display: flex;
   align-items: center;
   font-size: 16px;
 }
 
 .Stop__route--number {
+  flex: 1;
   min-width: 30px;
   text-align: center;
 }
 
-.Stop__route--heasdsign {
+.Stop__route--headsign {
+  flex: 3;
   font-size: 14px;
 }
 
 .Stop__route--time {
+  flex: 1;
+  text-align: end;
   font-size: 18px;
-  justify-self: center;
 }
 
