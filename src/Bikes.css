@@ -12,6 +12,8 @@
 
 .BikeStop {
   position: relative;
+  display: grid;
+  align-items: center;
 }
 
 .BikeStop__availability {
