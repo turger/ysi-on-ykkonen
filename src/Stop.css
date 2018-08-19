@@ -1,40 +1,21 @@
-.Stop {
-  display: flex;
-  flex-flow: row;
-  height: 100%;
-}
-
-.Stop__box {
-  color: #ecf0f1;
-  background-color: #2F2F2F;
-  height: 100%;
-  display: flex;
-  flex-flow: column;
+.Stop__route {
+  display: grid;
+  grid-template-columns: 1fr 2fr 6fr 2fr;
   align-items: center;
-  font-family: 'Play', sans-serif;
-  font-size: 30px;
-  width: 70px;
+  font-size: 16px;
 }
 
-.Stop__box--name {
-  font-size: 20px;
-  flex: 1;
-  color: #c4d0d4;
-  border: solid #c4d0d4 2px;
-  border-radius: 5px;
+.Stop__route--number {
   min-width: 30px;
   text-align: center;
-  padding: 1px 3px;
-  margin: 3px;
 }
 
-.Stop__box--time {
-  display: flex;
-  flex: 2;
-  align-items: flex-end;
-  justify-content: flex-end;
+.Stop__route--heasdsign {
+  font-size: 14px;
 }
 
-.Stop__box--small {
-  font-size: 25px;
+.Stop__route--time {
+  font-size: 18px;
+  justify-self: center;
 }
+

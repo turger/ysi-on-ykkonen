@@ -7,16 +7,10 @@ import DateTime from './DateTime'
 
 const App = () => (
   <div className="App" >
-    <div className="App_topRow">
-      <DateTime/>
-    </div>
-    <div className="App_middleRow">
-      <Stops/>
-      <Bikes/>
-    </div>
-    <div className="App_bottomRow">
-      <Weather/>
-    </div>
+    <DateTime/>
+    <Bikes/>
+    <Stops/>
+    <Weather/>
   </div>
 )
 

@@ -1,15 +1,22 @@
 .Stops {
-  display: flex;
-  flex: 2;
-  flex-flow: row;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
+  grid-area: stops;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  color: #ffffff;
 }
 
-.Stops__times {
-  display: flex;
-  flex-flow: column;
+.Stops__box {
+  background: #fa5e7b;
+  padding: 5px;
+}
+
+.Stops__box:first-child {
+  background: #1f9ca0;
+}
+
+.Stops__box__name {
+  text-align: center;
 }
 
 .Stops img {

@@ -1,27 +1,15 @@
 .App {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+  "datetime bikes"
+  "stops stops"
+  "weather weather";
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #2F2F2F;
-}
-
-.App_topRow {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(#595959, #404040, #2F2F2F);
-}
-
-.App_middleRow {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  flex: 2;
-}
-
-.App_bottomRow {
-  margin-bottom: 5px;
+  background-color: #1b232c;
+  padding: 10px;
+  box-sizing: border-box;
 }

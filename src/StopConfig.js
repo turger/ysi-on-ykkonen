@@ -1,8 +1,8 @@
-// Lauttasaaren silta HSL:1310102
-// {emoji-one-name: hsl-stop-id}
-export const StopIds = { 'bus':'HSL:1310102' }
+// Lauttasaaren silta Ruohikseen HSL:1310102
+// Lauttasaaren silta Vattuniemeen HSL:1310101
+export const StopIds = [ 'HSL:1310102', 'HSL:1310101' ]
 
 // Lauttasaaren silta bike stop id = 058
 // Lauttasaaren ostoskeskus bike stop id = 057
 // {stop-name-initial: hsl-stop-id}
-export const BikeStopIds = { 'S':'058', 'M':'057' }
+export const BikeStopIds = { 'Silta':'058', 'Metro':'057' }

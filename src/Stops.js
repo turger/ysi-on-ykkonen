@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './Stops.css'
 import Stop from './Stop'
-import Emoji from './Emoji'
 import { getSchedulesForStop } from './Requests'
 import { StopIds } from './StopConfig'
 
@@ -38,9 +37,11 @@ class Stops extends Component {
         { Object.keys(stops)
           .sort((a, b) => a > b)
           .map( key =>
-          <div className="Stops__times" key={key}>
-            <Emoji name={ `:${key}:` }/>
-            <Stop stops={ stops[key].stoptimesWithoutPatterns }/>
+          <div className="Stops__box" key={key}>
+            <div className="Stops__box__name">
+              { stops[key].name }
+            </div>
+            <Stop stops={ stops[key].stoptimesWithoutPatterns } directions={stops[key].patterns}/>
           </div>
           )
         }

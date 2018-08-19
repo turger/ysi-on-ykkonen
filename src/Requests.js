@@ -101,6 +101,14 @@ export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =
   stop(id:"${stopId}"){
     name
     gtfsId
+    patterns {
+      name
+      headsign
+      route {
+        longName
+        shortName
+      }
+    }
     stoptimesWithoutPatterns(
       startTime:"${startTime}",
       timeRange: 180000,
@@ -115,6 +123,7 @@ export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =
           gtfsId
           longName
           shortName
+          mode
         }
       }
     }

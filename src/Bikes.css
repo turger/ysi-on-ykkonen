@@ -1,56 +1,53 @@
+:root {
+  --percentage: 100;
+}
+
 .Bikes {
-  display: flex;
-  flex: 2;
-  flex-flow: column;
-  width: 100%;
-  justify-content: center;
+  grid-area: bikes;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: #2d3947;
+  color: #d4e2e6;
 }
 
-.Bikes__availability {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Play', sans-serif;
-  width: 100%;
-}
-
-.Bikes img {
-  height: 30px;
-  padding-top: 10px;
-  padding-left: 10px;
-  margin-left: 20px;
-}
-
-.Bikes__box {
+.BikeStop {
   position: relative;
-  display: flex;
-  flex-flow: column;
-  margin: 0 15px;
 }
 
-.Bikes__box__available {
+.BikeStop__availability {
   display: flex;
+  flex-direction: column;
+  text-align: center;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(#ffffff, #c4d0d4, #89a1a9);
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 60px;
   height: 60px;
-  border-radius: 50%;
-  font-size: 30px;
+  transform: translate(-50%, -50%);
 }
 
-.Bikes__box__stop {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 35px;
-  width: 35px;
-  right: -15px;
-  top: -15px;
-  border-radius: 50%;
-  background: radial-gradient(#8aa2a8, #98adb3, #a7b9be);
-  font-size: 20px;
-  text-align: center;
+.BikeStop__availability__name {
+  font-size: 14px;
+}
+
+.BikeStop__availability__amount {
+  font-size: 18px;
+}
+
+.circular-chart {
+  display: block;
+  margin: 8px auto;
+  max-height: 80px;
+  max-width: 80%;
+
+}
+
+.circle {
+  stroke: #1f9ca0;
+  fill: none;
+  stroke-width: 2.8px;
+  stroke-linecap: round;
+  stroke-dasharray: var(--percentage), 100;
 }

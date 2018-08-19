@@ -15,7 +15,7 @@ class DateTime extends Component {
     this.setTime()
     setInterval(() => {
       this.setTime()
-    } , 1000) //add 0
+    } , 10000)
   }
 
   setTime() {
@@ -27,8 +27,6 @@ class DateTime extends Component {
 
   render() {
     if (!this.state.date && !this.state.time) return null
-    const {time, date} = this.state
-    console.log(time, date)
     return (
       <div className="DateTime">
         <div className="DateTime__time">

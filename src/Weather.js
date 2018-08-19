@@ -24,7 +24,7 @@ class Weather extends Component {
     } , 600000)
   }
 
-  getCurrentWeatherData(weatherType) {
+  getCurrentWeatherData() {
     getWeatherData().then(forecast => {
       this.setState({ forecast })
     })
@@ -55,7 +55,7 @@ class Weather extends Component {
     if (!this.state.forecast) return null
     const forecast = this.state.forecast
     return (
-      <div className="Weather Weather__item">
+      <div className="Weather">
          <div className="Weather__item">
            { forecast.list
               .slice(0, 7)
