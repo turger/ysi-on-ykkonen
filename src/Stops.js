@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import './Stops.css'
 import Stop from './Stop'
 import { getSchedulesForStop } from './Requests'
@@ -20,13 +21,34 @@ class Stops extends Component {
   }
 
   getStopsData() {
-    Object.keys(StopIds).map(key =>
-      getSchedulesForStop(StopIds[key]).then(stopTimes => {
-        let stopsData = this.state.stopsData
-        stopsData[key] = stopTimes
-        this.setState({ stopsData })
-      })
-    )
+    Object.keys(StopIds).forEach(key => {
+      if (StopIds[key].search(';')) {
+        StopIds[key].split(';').forEach(stopId => this.getSchedules(stopId, key, {merge: true}))
+      } else {
+        this.getSchedules(StopIds[key], key, {merge: false})
+      }
+    })
+  }
+
+  getSchedules = (stopId, key, merge = false) => {
+    getSchedulesForStop(stopId).then(stopTimes => {
+      const stopsData = this.state.stopsData
+      stopsData[key] = merge ? this.mergeStops(stopsData[key], stopTimes) : stopTimes
+      this.setState({ stopsData })
+    })
+  }
+  
+  mergeStops = (currentStopTimes, newStopTimes) => {
+    if (!currentStopTimes) return newStopTimes
+    const mergedStopTimes = {}
+    Object.keys(newStopTimes).forEach(key => {
+      if(typeof newStopTimes[key] === 'string') {
+        mergedStopTimes[key] = newStopTimes[key]
+      } else {
+        mergedStopTimes[key] = _.uniqWith(_.orderBy([...currentStopTimes[key], ...newStopTimes[key]], ['serviceDay', 'realtimeArrival']), _.isEqual)
+      }
+    })
+    return mergedStopTimes
   }
 
   render() {
@@ -37,12 +59,9 @@ class Stops extends Component {
         { Object.keys(stops)
           .sort((a, b) => a > b)
           .map( key =>
-          <div className="Stops__box" key={key}>
-            <div className="Stops__box__name">
-              { stops[key].name }
+            <div className="Stops__box" key={key}>
+              <Stop stops={ stops[key].stoptimesWithoutPatterns } directions={stops[key].patterns}/>
             </div>
-            <Stop stops={ stops[key].stoptimesWithoutPatterns } directions={stops[key].patterns}/>
-          </div>
           )
         }
       </div>
