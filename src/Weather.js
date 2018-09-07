@@ -2,12 +2,8 @@ import React, { Component } from 'react'
 import Emoji from './Emoji'
 import weatherEmojis from './weatherEmojis'
 import './Weather.css'
-import { getWeatherData } from './Requests'
-
-const formatTime = timestamptxt => {
-  const time = timestamptxt.split(' ')[1].slice(0, -3);
-  return time
-}
+import { getFmiWeatherData } from './Requests'
+import { parseXmlWeatherData, formatTime } from './utils/utils'
 
 class Weather extends Component {
   constructor(props) {
@@ -21,20 +17,24 @@ class Weather extends Component {
     this.getCurrentWeatherData()
     setInterval(() => {
       this.getCurrentWeatherData()
-    } , 600000)
+    } , 3600000)
   }
 
   getCurrentWeatherData() {
-    getWeatherData().then(forecast => {
-      this.setState({ forecast })
-    })
+    getFmiWeatherData()
+      .then(data => {
+        parseXmlWeatherData(data)
+          .then(forecast => {
+            this.setState({ forecast })
+          })
+      })
   }
 
 
   chooseIcon(temp, icon) {
-    if (temp > 20 && (icon === '01d' || icon === '01n')) {
+    if (temp > 20 && icon === 1) {
       return ":fire:"
-    } else if (temp <= -10 && (icon === '13d' || icon === '13n')) {
+    } else if (temp <= -10 && icon >= 41 && icon <= 53) {
       return ":snowman2:"
     } else {
       return weatherEmojis[icon]
@@ -43,22 +43,25 @@ class Weather extends Component {
 
   renderWeatherItem(weather) {
     return (
-      <div className="Weather__item__box" key={weather.dt}>
-        <div className="Weather__item__time">{ formatTime(weather.dt_txt)}</div>
-        <div className="Weather__item__temp">{ Math.round(weather.main.temp) }°</div>
-        <Emoji name={ this.chooseIcon(Math.round(weather.main.temp), weather.weather[0].icon) }/>
+      <div className="Weather__item__box" key={weather.time}>
+        <div className="Weather__item__time">{ formatTime(weather.time)}</div>
+        <div className="Weather__item__temp">{ Math.round(weather.temperature) }°</div>
+        <Emoji name={ this.chooseIcon(Math.round(weather.temperature), weather.weathersymbol3) }/>
       </div>
     )
   }
 
   render() {
-    if (!this.state.forecast) return null
     const forecast = this.state.forecast
+    if (!forecast) return null
+    console.log(forecast)
+    console.log(forecast.filter((i, key) => key % 3 === 0))
     return (
       <div className="Weather">
          <div className="Weather__item">
-           { forecast.list
-              .slice(0, 7)
+           { forecast
+              .filter((w, key) => key % 3 === 0)
+              .slice(0, 8)
               .map(weather => this.renderWeatherItem(weather))
            }
          </div>

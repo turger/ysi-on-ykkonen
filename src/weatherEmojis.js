@@ -1,20 +1,29 @@
 export default {
-  '01d': ':sunny:',
-  '01n': ':sunny:',
-  '02d': ':partly_sunny:',
-  '02n': ':partly_sunny:',
-  '03d': ':cloud:',
-  '03n': ':cloud:',
-  '04d': ':cloud:',
-  '04n': ':cloud:',
-  '09d': ':cloud_rain:',
-  '09n': ':cloud_rain:',
-  '10d': ':white_sun_rain_cloud:',
-  '10n': ':white_sun_rain_cloud:',
-  '11d': ':cloud_lightning:',
-  '11n': ':cloud_lightning:',
-  '13d': ':cloud_snow:',
-  '13n': ':cloud_snow:',
-  '50d': ':fog:',
-  '50n': ':fog:',
+  1: ':sunny:', //'selkeää'
+  2: ':partly_sunny:', //'puolipilvistä'
+  21: ':white_sun_rain_cloud:', //'heikkoja sadekuuroja'
+  22: ':white_sun_rain_cloud:', //'sadekuuroja'
+  23: ':white_sun_rain_cloud:', //'voimakkaita sadekuuroja'
+  3: ':cloud:', //'pilvistä'
+  31: ':cloud_rain:', //'heikkoa vesisadetta'
+  32: ':cloud_rain:', //'vesisadetta'
+  33: ':cloud_rain:', //'voimakasta vesisadetta'
+  41: ':cloud_snow:', //'heikkoja lumikuuroja'
+  42: ':cloud_snow:', //'lumikuuroja'
+  43: ':cloud_snow:', //'voimakkaita lumikuuroja'
+  51: ':cloud_snow:', //'heikkoa lumisadetta'
+  52: ':cloud_snow:', //'lumisadetta'
+  53: ':cloud_snow:', //'voimakasta lumisadetta'
+  61: ':cloud_lightning:', //'ukkoskuuroja'
+  62: ':cloud_lightning:', //'voimakkaita ukkoskuuroja'
+  63: ':cloud_lightning:', //'ukkosta'
+  64: ':cloud_lightning:', //'voimakasta ukkosta'
+  71: ':white_sun_rain_cloud:', //'heikkoja räntäkuuroja'
+  72: ':white_sun_rain_cloud:', //'räntäkuuroja'
+  73: ':white_sun_rain_cloud:', //'voimakkaita räntäkuuroja'
+  81: ':cloud_rain:', //'heikkoa räntäsadetta'
+  82: ':cloud_rain:', //'räntäsadetta'
+  83: ':cloud_rain:', //'voimakasta räntäsadetta'
+  91: ':fog:', //'utua'
+  92: ':fog:',//'sumua'
 }

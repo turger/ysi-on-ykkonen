@@ -1,15 +1,10 @@
 import 'whatwg-fetch'
 
-export const API_KEY = process.env.REACT_APP_KEY
-
-export const getWeatherData = () => new Promise(resolve => {
-  fetch(`http://api.openweathermap.org/data/2.5/forecast?id=658226&APPID=${API_KEY}&units=metric`)
+export const getFmiWeatherData = () => new Promise(resolve => {
+  fetch('https://opendata.fmi.fi/wfs?request=getFeature&storedquery_id=fmi::forecast::hirlam::surface::point::simple&place=kaisaniemi,helsinki&maxlocations=1')
     .then(res => {
       if (res.status !== 200) throw new Error(res.status)
-      return res.json()
-    })
-    .then(res => {
-      resolve(res)
+      resolve(res.text())
     })
     .catch(err => {
       console.warn(err)

@@ -32,9 +32,10 @@
 .Weather__item__temp {
   font-size: 16px;
   color: #c4d0d4;
+  padding-top: 2px;
 }
 
 .Weather__item img {
   height: 20px;
-  padding-top: 2px;
+  padding-top: 4px;
 }

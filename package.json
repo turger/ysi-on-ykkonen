@@ -10,7 +10,8 @@
     "react-dom": "^15.4.1",
     "react-scripts": "0.8.4",
     "react-svg": "^5.0.17",
-    "whatwg-fetch": "^2.0.1"
+    "whatwg-fetch": "^2.0.1",
+    "xml2js": "^0.4.19"
   },
   "scripts": {
     "start": "react-scripts start",

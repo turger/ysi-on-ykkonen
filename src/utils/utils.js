@@ -1,3 +1,8 @@
+import moment from 'moment'
+
+const xml2js = require('xml2js')
+const xmlParser = new xml2js.Parser()
+
 export const getTimeIfMoreThan60min = (minutesToDeparture, departureTimestamp) => {
   if (minutesToDeparture >= 60) {
     const depDate = new Date(departureTimestamp * 1000)
@@ -21,4 +26,41 @@ export const minutesToDeparture = (departureTimestamp, serviceDay, currDate = ne
     minutesToDeparture = Math.floor(((departureTimestamp-secondsInDay)-currDateInSeconds) / 60)
   }
   return getTimeIfMoreThan60min(minutesToDeparture, departureTimestamp)
+}
+
+const parseXml = xml => {
+  const forecast = []
+  xml['wfs:FeatureCollection']['wfs:member'].forEach((memberElem) => {
+    const forecastElem = memberElem['BsWfs:BsWfsElement'][0]
+    const time = forecastElem['BsWfs:Time'][0]
+    const paramName = forecastElem['BsWfs:ParameterName'][0].toLowerCase()
+    const rawParamValue = forecastElem['BsWfs:ParameterValue'][0]
+    const paramValue = isNaN(rawParamValue) ? rawParamValue: parseFloat(rawParamValue)
+    const forecastItem = forecast.find(item => item.time === time)
+    if (forecastItem !== undefined) {
+      forecastItem[paramName] = paramValue
+    } else {
+      const paramObject = {
+        time,
+      }
+      paramObject[paramName] = paramValue
+      forecast.push(paramObject)
+    }
+  })
+  return forecast
+}
+
+export const parseXmlWeatherData = xmlText =>
+  new Promise((resolve, reject) => {
+    xmlParser.parseString(xmlText, (err, result) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(parseXml(result))
+    })
+  })
+
+export const formatTime = timestamptxt => {
+  const time = moment(timestamptxt).format("HH:mm")
+  return time
 }
