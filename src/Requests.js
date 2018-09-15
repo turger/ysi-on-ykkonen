@@ -12,9 +12,7 @@ export const getFmiWeatherData = () => new Promise(resolve => {
 })
 
 const getCurrentTimestamp = () => {
-  const date = new Date()
-  const unixtimestamp = Math.round(date.getTime() / 1000)
-  return unixtimestamp
+  return Math.round(new Date().getTime() / 1000)
 }
 
 const doQuery = query => new Promise(resolve => {
@@ -50,45 +48,6 @@ export const getBikes = (id) => doQuery(`
     }
   }`
 ).then(res => res.data.bikeRentalStation)
-
-export const getStopsByLocation = (lat, lon) => doQuery(`
-  {
-    stopsByRadius(lat:${lat}, lon:${lon}, radius:500) {
-      edges {
-        node {
-          distance
-          stop {
-            gtfsId
-            name
-          }
-        }
-      }
-    }
-  }`
-).then(res => res.data.stopsByRadius.edges)
-
-export const getStopIds = stopName => doQuery(`
-  {
-    stops (name: "${stopName}") {
-      gtfsId
-    }
-  }`
-).then(res => res.data.stops)
-
-export const getStopRoutes = stopName => doQuery(`
-  { stops (name: "${stopName}") {
-    id
-    name
-    gtfsId
-    routes
-      {
-        id
-        longName
-        shortName
-      }
-    }
-  }`
-).then(res => res.data.stops)
 
 export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =>
   doQuery(`

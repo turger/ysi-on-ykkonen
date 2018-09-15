@@ -21,31 +21,32 @@ class Stops extends Component {
   }
 
   getStopsData() {
-    Object.keys(StopIds).forEach(key => {
-      if (StopIds[key].search(';')) {
-        StopIds[key].split(';').forEach(stopId => this.getSchedules(stopId, key, {merge: true}))
+    Object.keys(StopIds).forEach(i => {
+      if (StopIds[i].includes(';')) {
+        StopIds[i].split(';').forEach(stopId => this.getSchedules(stopId, i, {merge: true}))
       } else {
-        this.getSchedules(StopIds[key], key, {merge: false})
+        this.getSchedules(StopIds[i], i)
       }
     })
   }
 
-  getSchedules = (stopId, key, merge = false) => {
+  getSchedules = (stopId, i, {merge = false} = {}) => {
     getSchedulesForStop(stopId).then(stopTimes => {
       const stopsData = this.state.stopsData
-      stopsData[key] = merge ? this.mergeStops(stopsData[key], stopTimes) : stopTimes
+      stopsData[i] = merge ? this.mergeStops(stopsData[i], stopTimes) : stopTimes
       this.setState({ stopsData })
     })
   }
   
   mergeStops = (currentStopTimes, newStopTimes) => {
     if (!currentStopTimes) return newStopTimes
+    if (currentStopTimes['gtfsId'].includes(newStopTimes['gtfsId'])) return newStopTimes
     const mergedStopTimes = {}
-    Object.keys(newStopTimes).forEach(key => {
-      if(typeof newStopTimes[key] === 'string') {
-        mergedStopTimes[key] = newStopTimes[key]
+    Object.keys(newStopTimes).forEach(i => {
+      if(typeof newStopTimes[i] === 'string') {
+        mergedStopTimes[i] = `${newStopTimes[i]};${currentStopTimes[i]}`
       } else {
-        mergedStopTimes[key] = _.uniqWith(_.orderBy([...currentStopTimes[key], ...newStopTimes[key]], ['serviceDay', 'realtimeArrival']), _.isEqual)
+        mergedStopTimes[i] = _.orderBy([...currentStopTimes[i], ...newStopTimes[i]], ['serviceDay', 'realtimeArrival'])
       }
     })
     return mergedStopTimes

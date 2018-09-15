@@ -17,7 +17,7 @@ class Weather extends Component {
     this.getCurrentWeatherData()
     setInterval(() => {
       this.getCurrentWeatherData()
-    } , 3600000)
+    } , 600000)
   }
 
   getCurrentWeatherData() {
@@ -54,8 +54,6 @@ class Weather extends Component {
   render() {
     const forecast = this.state.forecast
     if (!forecast) return null
-    console.log(forecast)
-    console.log(forecast.filter((i, key) => key % 3 === 0))
     return (
       <div className="Weather">
          <div className="Weather__item">
