@@ -19,23 +19,12 @@ Emoji one names https://www.emojione.com/emoji/v3
 
 Add selected stops to src/StopConfig.js
 
-### Open Weather Map API
-
-To use free Open weather map, you need to have an API key.
-Create one at https://openweathermap.org/appid
-
-Then create .env file to project root and add row:
-
-```
-REACT_APP_KEY = '<insert-key-here>'
-```
-
 ### Start app
 
 First clone project then
 
 ```
-npm install
+yarn
 ```
 
 ```
