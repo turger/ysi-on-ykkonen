@@ -3,13 +3,13 @@ import _ from 'lodash'
 import './Stops.css'
 import Stop from './Stop'
 import { getSchedulesForStop } from './Requests'
-import { StopIds } from './StopConfig'
 
 class Stops extends Component {
   constructor(props) {
     super(props)
     this.state = {
       stopsData: {},
+      errorMessage: null,
     }
   }
 
@@ -21,11 +21,13 @@ class Stops extends Component {
   }
 
   getStopsData() {
-    Object.keys(StopIds).forEach(i => {
-      if (StopIds[i].includes(';')) {
-        StopIds[i].split(';').forEach(stopId => this.getSchedules(stopId, i, {merge: true}))
+    const stopIds = process.env.REACT_APP_STOP_IDS ? process.env.REACT_APP_STOP_IDS.split(',') : []
+    if (_.isEmpty(stopIds)) this.setState({errorMessage: 'No stops found!'})
+    stopIds.forEach((stopId,i) => {
+      if (stopId.includes(';')) {
+        stopId.split(';').forEach(stopId => this.getSchedules(stopId, i, {merge: true}))
       } else {
-        this.getSchedules(StopIds[i], i)
+        this.getSchedules(stopId, i)
       }
     })
   }
@@ -53,15 +55,16 @@ class Stops extends Component {
   }
 
   render() {
-    if (!this.state.stopsData) return null
-    const stops = this.state.stopsData
+    const {stopsData, errorMessage} = this.state
+    if (!stopsData) return null
     return (
       <div className="Stops">
-        { Object.keys(stops)
+        { errorMessage && <div>{errorMessage}</div> }
+        { Object.keys(stopsData)
           .sort((a, b) => a > b)
           .map( key =>
             <div className="Stops__box" key={key}>
-              <Stop stops={ stops[key].stoptimesWithoutPatterns } directions={stops[key].patterns}/>
+              <Stop stops={ stopsData[key].stoptimesWithoutPatterns } directions={stopsData[key].patterns}/>
             </div>
           )
         }

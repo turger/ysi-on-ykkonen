@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import ReactSVG from 'react-svg'
 import { getBikes } from './Requests'
-import { BikeStopIds } from './StopConfig'
 import Circle from './assets/circle.svg'
 import './Bikes.css'
+import _ from 'lodash'
 
 
 class Bikes extends Component {
@@ -11,6 +11,7 @@ class Bikes extends Component {
     super(props)
     this.state = {
       bikesData: {},
+      errorMessage: null,
     }
     this._bikesBoxes = {}
   }
@@ -30,44 +31,49 @@ class Bikes extends Component {
   }
 
   getBikesData() {
-    Object.keys(BikeStopIds).map(key =>
-      getBikes(BikeStopIds[key]).then(bikeStopTimes => {
+    const bikeStopIds = process.env.REACT_APP_BIKE_STOP_IDS ? process.env.REACT_APP_BIKE_STOP_IDS.split(',') : []
+    if (_.isEmpty(bikeStopIds)) this.setState({errorMessage: 'No stops found!'})
+    bikeStopIds.forEach(pair => {
+      const name = pair.split(';')[0]
+      const id = pair.split(';')[1]
+      getBikes(id).then(bikeStopTimes => {
         let bikesData = this.state.bikesData
-        bikesData[key] = bikeStopTimes
+        bikesData[name] = bikeStopTimes
         this.setState({ bikesData })
       })
-    )
+    })
   }
 
   render() {
-    if (!this.state.bikesData) return null
-    const bikes = this.state.bikesData
+    const {bikesData, errorMessage} = this.state
+    if (!bikesData) return null
     return (
       <div className="Bikes">
-          { Object.keys(bikes)
-            .sort((a, b) => a > b)
-            .map( key => {
-              const percentage = Math.round((bikes[key].bikesAvailable/(bikes[key].bikesAvailable+bikes[key].spacesAvailable))*100)
-              return (
-                <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = {percentage, obj: c})}>
-                  <ReactSVG
-                    path={Circle}
-                    svgClassName="circular-chart"
-                    className="Percentage__circle"
-                  />
+        { errorMessage && <div>{errorMessage}</div> }
+        { Object.keys(bikesData)
+          .sort((a, b) => a > b)
+          .map( key => {
+            const percentage = Math.round((bikesData[key].bikesAvailable/(bikesData[key].bikesAvailable+bikesData[key].spacesAvailable))*100)
+            return (
+              <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = {percentage, obj: c})}>
+                <ReactSVG
+                  path={Circle}
+                  svgClassName="circular-chart"
+                  className="Percentage__circle"
+                />
 
-                  <div className="BikeStop__availability">
-                    <div className="BikeStop__availability__name">
-                      { key }
-                    </div>
-                    <div className="BikeStop__availability__amount">
-                      { bikes[key].bikesAvailable }
-                    </div>
+                <div className="BikeStop__availability">
+                  <div className="BikeStop__availability__name">
+                    { key }
+                  </div>
+                  <div className="BikeStop__availability__amount">
+                    { bikesData[key].bikesAvailable }
                   </div>
                 </div>
-              )
-            })
-          }
+              </div>
+            )
+          })
+        }
       </div>
     )
   }
