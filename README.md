@@ -14,11 +14,14 @@ Create .env file to project root and add stops information to it
 # Lauttasaaren silta Katajaharjuun HSL:1310101
 # Lauttasaaren silta Vattuniemeen HSL:1310139
 # ID:s separated with dots, if multiple stops should be merged to one box then separate these with semicolon
+# Add at least one stopId, but not more than two unless some of the stops are merged into one box
+# For example two stops very close to each other and going to the same direction could be merged in one box
 REACT_APP_STOP_IDS=HSL:1310102,HSL:1310101;HSL:1310139
 
 # Lauttasaaren silta bike stop id = 058
 # Lauttasaaren ostoskeskus bike stop id = 057
 # <stop-name>;<hsl-stop-id> pairs separated with dots
+# Add at least one bike stop, but not more than two
 REACT_APP_BIKE_STOP_IDS=Silta;058,Metro;057
 ```
 

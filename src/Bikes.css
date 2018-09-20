@@ -4,6 +4,8 @@
 
 .Bikes {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 1;
   background: #2d3947;
   color: #d4e2e6;
