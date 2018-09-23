@@ -6,6 +6,11 @@
   display: flex;
   align-items: center;
   font-size: 16px;
+  padding-bottom: 3px;
+}
+
+.Stop__route:last-child {
+  padding-bottom: 0px;
 }
 
 .Stop__route--number {
