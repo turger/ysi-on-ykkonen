@@ -39,13 +39,13 @@ Emoji one names https://www.emojione.com/emoji/v3
 
 First clone project then
 
-```
-yarn
-```
+`yarn`  
+`yarn start` 
 
-```
-yarn start
-```
+## Deploy to heroku
+
+`heroku git:remote -a heroku-app-name`  
+`git push heroku master`
 
 ## Example
 
