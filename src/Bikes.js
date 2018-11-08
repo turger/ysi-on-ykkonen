@@ -34,8 +34,8 @@ class Bikes extends Component {
     const bikeStopIds = process.env.REACT_APP_BIKE_STOP_IDS ? process.env.REACT_APP_BIKE_STOP_IDS.split(',') : []
     if (_.isEmpty(bikeStopIds)) this.setState({errorMessage: 'No stops found!'})
     bikeStopIds.forEach(pair => {
-      const name = pair.split(';')[0]
-      const id = pair.split(';')[1]
+      const name = pair.split(':')[0]
+      const id = pair.split(':')[1]
       getBikes(id).then(bikeStopTimes => {
         let bikesData = this.state.bikesData
         bikesData[name] = bikeStopTimes
@@ -53,7 +53,7 @@ class Bikes extends Component {
         { Object.keys(bikesData)
           .sort((a, b) => a > b)
           .map( key => {
-            const percentage = Math.round((bikesData[key].bikesAvailable/(bikesData[key].bikesAvailable+bikesData[key].spacesAvailable))*100)
+            const percentage = Math.round((bikesData[key].bikesAvailable/(bikesData[key].bikesAvailable+bikesData[key].spacesAvailable))*100) || 0
             return (
               <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = {percentage, obj: c})}>
                 <ReactSVG

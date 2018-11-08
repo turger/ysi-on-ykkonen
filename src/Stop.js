@@ -8,7 +8,7 @@ const Stop = ({stops, directions}) => (
     {stops
       .filter(stopTime => {
         const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
-        return(!Number.isInteger(timeToDeparture) ||timeToDeparture > 4)}
+        return(!Number.isInteger(timeToDeparture) || timeToDeparture >= 3)}
       )
       .slice(0, 3)
       .map(stopTime => {

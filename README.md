@@ -22,7 +22,7 @@ REACT_APP_STOP_IDS=HSL:1310102,HSL:1310101;HSL:1310139
 # Lauttasaaren ostoskeskus bike stop id = 057
 # <stop-name>;<hsl-stop-id> pairs separated with dots
 # Add at least one bike stop, but not more than two
-REACT_APP_BIKE_STOP_IDS=Silta;058,Metro;057
+REACT_APP_BIKE_STOP_IDS=Silta:058,Metro:057
 ```
 
 ### Public transportation
