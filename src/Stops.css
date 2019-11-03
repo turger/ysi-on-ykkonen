@@ -2,12 +2,12 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  color: #ffffff;
+  color: #f3e9fb;
 }
 
 .Stops__box {
   align-items: center;
-  background: #fa5e7b;
+  background: linear-gradient(27deg, rgba(164,26,133,1) 0%, rgba(230,18,103,1) 69%);
   padding: 5px;
   margin: 5px 10px 5px 5px;
   width: 100%;
@@ -15,7 +15,7 @@
 
 .Stops__box:first-child {
   margin: 5px 5px 5px 10px;
-  background: #1f9ca0;
+  background: linear-gradient(27deg, rgba(85,12,130,1) 0%, rgba(129,18,142,1) 69%);
 }
 
 .Stops img {

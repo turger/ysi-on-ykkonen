@@ -15,7 +15,7 @@ class DateTime extends Component {
     this.setTime()
     setInterval(() => {
       this.setTime()
-    } , 10000)
+    } , 1000)
   }
 
   setTime() {

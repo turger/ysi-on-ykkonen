@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   color: #ecf0f1;
-  background: #2d3947;
+  background: #2c0734;
   margin: 5px 10px 10px 10px;
 }
 
@@ -26,12 +26,12 @@
 
 .Weather__item__time {
   font-size: 14px;
-  color: #98adb3;
+  color: #cea8f0;
 }
 
 .Weather__item__temp {
   font-size: 16px;
-  color: #c4d0d4;
+  color: #e7d4f7;
   padding-top: 2px;
 }
 
