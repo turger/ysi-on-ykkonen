@@ -39,10 +39,10 @@ class Stops extends Component {
       this.setState({ stopsData })
     })
   }
-  
+
   mergeStops = (currentStopTimes, newStopTimes) => {
-    if (!currentStopTimes) return newStopTimes
-    if (currentStopTimes['gtfsId'].includes(newStopTimes['gtfsId'])) return newStopTimes
+    if (!currentStopTimes || _.isEmpty(newStopTimes)) return newStopTimes
+    if (_.get(currentStopTimes, 'gtfsId').includes(_.get(newStopTimes, 'gtfsId'))) return newStopTimes
     const mergedStopTimes = {}
     Object.keys(newStopTimes).forEach(i => {
       if(typeof newStopTimes[i] === 'string') {
@@ -64,7 +64,9 @@ class Stops extends Component {
           .sort((a, b) => a > b)
           .map( key =>
             <div className="Stops__box" key={key}>
-              <Stop stops={ stopsData[key].stoptimesWithoutPatterns } directions={stopsData[key].patterns}/>
+              {stopsData[key] &&
+                <Stop stops={stopsData[key].stoptimesWithoutPatterns} directions={stopsData[key].patterns}/>
+              }
             </div>
           )
         }
