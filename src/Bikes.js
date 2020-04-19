@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReactSVG from 'react-svg'
+import { ReactSVG } from 'react-svg'
 import { getBikes } from './Requests'
 import Circle from './assets/circle.svg'
 import './Bikes.css'
@@ -57,8 +57,7 @@ class Bikes extends Component {
             return (
               <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = {percentage, obj: c})}>
                 <ReactSVG
-                  path={Circle}
-                  svgClassName="circular-chart"
+                  src={Circle}
                   className="Percentage__circle"
                 />
 

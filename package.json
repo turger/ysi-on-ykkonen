@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "classnames": "^2.2.5",
-    "emojione": "^3.1.2",
-    "lodash": "^4.17.11",
-    "moment": "^2.22.2",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "react-scripts": "0.8.4",
-    "react-svg": "^5.0.17",
-    "whatwg-fetch": "^2.0.1",
-    "xml2js": "^0.4.19"
+    "classnames": "^2.2.6",
+    "emojione": "^4.5.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "react-svg": "^11.0.19",
+    "whatwg-fetch": "^3.0.0",
+    "xml2js": "^0.4.23"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,5 +20,17 @@
     "test": "react-scripts test --env=node",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

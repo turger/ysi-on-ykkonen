@@ -1,29 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import emojione from 'emojione'
 
-class Emoji extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (this._dom) {
-      this._dom.innerHTML = emojione.shortnameToImage(nextProps.name)
-    }
-  }
+const Emoji = ({name}) => <div className="Emoji">{emojione.shortnameToUnicode(name)}</div>
 
-  componentWillUnmount() {
-    this._dom.innerHTML = ''
-    this._dom = null
-  }
-
-  componentDidMount() {
-    this._dom.innerHTML = emojione.shortnameToImage(this.props.name)
-  }
-
-  render() {
-    return <div className="Emoji" ref={dom => this._dom = dom} />
-  }
-}
-
-Emoji.propTypes = {
-  name: PropTypes.string.isRequired,
-}
+Emoji.propTypes = {name: PropTypes.string.isRequired}
 
 export default Emoji
