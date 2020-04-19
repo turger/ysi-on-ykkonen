@@ -42,17 +42,22 @@ class Weather extends Component {
   }
 
   renderWeatherItem(weather) {
+    console.log('weather', weather)
     return (
       <div className="Weather__item__box" key={weather.time}>
         <div className="Weather__item__time">{ formatTime(weather.time)}</div>
         <div className="Weather__item__temp">{ Math.round(weather.temperature) }°</div>
         <Emoji name={ this.chooseIcon(Math.round(weather.temperature), weather.weathersymbol3) }/>
+        <div className="Weather__item__wind">
+          { Math.round(weather.windspeedms) }
+          <div className="Weather__item__wind__ms">m/s</div>
+        </div>
       </div>
     )
   }
 
   render() {
-    const forecast = this.state.forecast
+    const {forecast} = this.state
     if (!forecast) return null
     return (
       <div className="Weather">
