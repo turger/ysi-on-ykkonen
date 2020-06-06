@@ -5,7 +5,6 @@ import Circle from './assets/circle.svg'
 import './Bikes.css'
 import _ from 'lodash'
 
-
 class Bikes extends Component {
   constructor(props) {
     super(props)
@@ -53,7 +52,9 @@ class Bikes extends Component {
         { Object.keys(bikesData)
           .sort((a, b) => a > b)
           .map( key => {
-            const percentage = Math.round((bikesData[key].bikesAvailable/(bikesData[key].bikesAvailable+bikesData[key].spacesAvailable))*100) || 0
+            const bikesAvailable = _.get(bikesData, `${key}.bikesAvailable`)
+            const spacesAvailable = _.get(bikesData, `${key}.spacesAvailable`)
+            const percentage = Math.round((bikesAvailable/(bikesAvailable+spacesAvailable))*100) || 0
             return (
               <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = {percentage, obj: c})}>
                 <ReactSVG
@@ -66,7 +67,7 @@ class Bikes extends Component {
                     { key }
                   </div>
                   <div className="BikeStop__availability__amount">
-                    { bikesData[key].bikesAvailable }
+                    { bikesAvailable }
                   </div>
                 </div>
               </div>
