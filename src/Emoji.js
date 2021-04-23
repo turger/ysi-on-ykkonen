@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import emojione from 'emojione'
+import {emojify} from 'react-emojione';
 
-const Emoji = ({name}) => <div className="Emoji" dangerouslySetInnerHTML={{__html: emojione.shortnameToImage(name)}}/>
+const Emoji = ({name}) => <div className="Emoji">{emojify(name)}</div>
 
 Emoji.propTypes = {name: PropTypes.string.isRequired}
 
