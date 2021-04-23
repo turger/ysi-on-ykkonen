@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Emoji from './Emoji'
 import weatherEmojis from './weatherEmojis'
 import './Weather.css'
-import { getFmiWeatherData } from './Requests'
+import { getFmiWeatherData } from './Requests'
 import { parseXmlWeatherData, formatTime } from './utils/utils'
 
 class Weather extends Component {
@@ -33,11 +33,11 @@ class Weather extends Component {
 
   chooseIcon(temp, icon) {
     if (temp > 20 && icon === 1) {
-      return ":fire:"
+      return ":sun_with_face:"
     } else if (temp <= -10 && icon >= 41 && icon <= 53) {
       return ":snowman2:"
     } else {
-      return weatherEmojis[icon]
+      return weatherEmojis[icon] || ':poop:'
     }
   }
 

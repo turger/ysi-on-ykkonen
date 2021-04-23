@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "npm": "6.4.1",
-    "node": "10.15.3"
+    "npm": "7.8.0",
+    "node": "14.4.0"
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "emojione": "^4.5.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-emojione": "^5.0.1",
     "react-scripts": "3.2.0",
     "react-svg": "^11.0.19",
     "whatwg-fetch": "^3.0.0",
