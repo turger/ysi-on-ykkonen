@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import Emoji from './Emoji'
 import weatherEmojis from './weatherEmojis'
+import Arrow from './assets/up-arrow.svg'
 import './Weather.css'
 import { getFmiWeatherData } from './Requests'
 import { parseXmlWeatherData, formatTime } from './utils/utils'
+import {ReactSVG} from 'react-svg'
 
 class Weather extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class Weather extends Component {
     this.state = {
       forecast: null,
     }
+    this._windexes = {}
   }
 
   componentDidMount() {
@@ -18,6 +21,13 @@ class Weather extends Component {
     setInterval(() => {
       this.getCurrentWeatherData()
     } , 600000)
+  }
+
+  componentDidUpdate() {
+    Object.keys(this._windexes).forEach(i => {
+      const windex = this._windexes[i]
+      windex.obj && windex.obj.style.setProperty('--deg', windex.direction)
+    })
   }
 
   getCurrentWeatherData() {
@@ -30,7 +40,6 @@ class Weather extends Component {
       })
   }
 
-
   chooseIcon(temp, icon) {
     if (temp > 20 && icon === 1) {
       return ":sun_with_face:"
@@ -42,14 +51,18 @@ class Weather extends Component {
   }
 
   renderWeatherItem(weather) {
+    const key = weather.time + '-' + weather.windspeedms
     return (
       <div className="Weather__item__box" key={weather.time}>
         <div className="Weather__item__time">{ formatTime(weather.time)}</div>
         <div className="Weather__item__temp">{ Math.round(weather.temperature) }°</div>
         <Emoji name={ this.chooseIcon(Math.round(weather.temperature), weather.weathersymbol3) }/>
-        <div className="Weather__item__wind">
-          { Math.round(weather.windspeedms) }
-          <div className="Weather__item__wind__ms">m/s</div>
+        <div className="Weather__item__wind" key={key} ref={c => (this._windexes[key] = {direction: `${weather.winddirection}deg` || '0deg', obj: c})}>
+          <div className="Weather__item__wind__ms">{ Math.round(weather.windspeedms) }</div>
+          <ReactSVG
+            src={Arrow}
+            className="Direction__arrow"
+          />
         </div>
       </div>
     )

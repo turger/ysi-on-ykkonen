@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ReactSVG } from 'react-svg'
-import { getBikes } from './Requests'
+import { getBikes } from './Requests'
 import Circle from './assets/circle.svg'
 import './Bikes.css'
 import _ from 'lodash'

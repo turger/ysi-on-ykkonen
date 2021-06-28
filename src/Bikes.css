@@ -1,7 +1,3 @@
-:root {
-  --percentage: 100;
-}
-
 .Bikes {
   display: flex;
   align-items: center;

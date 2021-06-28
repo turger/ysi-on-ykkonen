@@ -46,7 +46,7 @@ class Stops extends Component {
     const mergedStopTimes = {}
     Object.keys(newStopTimes).forEach(i => {
       if(typeof newStopTimes[i] === 'string') {
-        mergedStopTimes[i] = `${newStopTimes[i]};${currentStopTimes[i]}`
+        mergedStopTimes[i] = ```${newStopTimes[i]};${currentStopTimes[i]}`
       } else {
         mergedStopTimes[i] = _.orderBy([...currentStopTimes[i], ...newStopTimes[i]], ['serviceDay', 'realtimeArrival'])
       }
