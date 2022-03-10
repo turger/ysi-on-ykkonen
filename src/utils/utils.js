@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { getSunrise, getSunset } from 'sunrise-sunset-js'
 
 const xml2js = require('xml2js')
 const xmlParser = new xml2js.Parser()
@@ -63,4 +64,13 @@ export const parseXmlWeatherData = xmlText =>
 export const formatTime = timestamptxt => {
   const time = moment(timestamptxt).format("HH:mm")
   return time
+}
+
+const HELSINKI_LAT = 60.192059
+const HELSINKI_LNG = 24.945831
+export const isNight = date => {
+  const sunrise = getSunrise(HELSINKI_LAT, HELSINKI_LNG, new Date(date)).toISOString()
+  const sunset = getSunset(HELSINKI_LAT, HELSINKI_LNG, new Date(date)).toISOString()
+
+  return date < sunrise || date > sunset
 }

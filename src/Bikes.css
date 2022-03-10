@@ -3,9 +3,11 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  background: linear-gradient(27deg, rgba(18,135,183,1) 0%, rgba(43,195,194,1) 69%);
+  background: rgba(18,135,183);
   color: #ffffff;
   margin: 10px 10px 5px 5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .BikeStop {
@@ -25,10 +27,12 @@
   width: 60px;
   height: 60px;
   transform: translate(-50%, -50%);
+  font-weight: 900;
 }
 
 .BikeStop__availability__name {
-  font-size: 14px;
+  font-size: 12px;
+  padding-bottom: 1px;
 }
 
 .BikeStop__availability__amount {
@@ -40,7 +44,6 @@
   margin: 8px auto;
   max-height: 80px;
   max-width: 80%;
-
 }
 
 .circle {

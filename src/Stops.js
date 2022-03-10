@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import './Stops.css'
 import Stop from './Stop'
-import { getSchedulesForStop } from './Requests'
+import { getSchedulesForStop } from './Requests'
 
 class Stops extends Component {
   constructor(props) {
@@ -24,8 +24,8 @@ class Stops extends Component {
     const stopIds = process.env.REACT_APP_STOP_IDS ? process.env.REACT_APP_STOP_IDS.split(',') : []
     if (_.isEmpty(stopIds)) this.setState({errorMessage: 'No stops found!'})
     stopIds.forEach((stopId,i) => {
-      if (stopId.includes(';')) {
-        stopId.split(';').forEach(stopId => this.getSchedules(stopId, i, {merge: true}))
+      if (stopId.includes('-')) {
+        stopId.split('-').forEach(stopId => this.getSchedules(stopId, i, {merge: true}))
       } else {
         this.getSchedules(stopId, i)
       }
@@ -46,7 +46,7 @@ class Stops extends Component {
     const mergedStopTimes = {}
     Object.keys(newStopTimes).forEach(i => {
       if(typeof newStopTimes[i] === 'string') {
-        mergedStopTimes[i] = ```${newStopTimes[i]};${currentStopTimes[i]}`
+        mergedStopTimes[i] = `${newStopTimes[i]};${currentStopTimes[i]}`
       } else {
         mergedStopTimes[i] = _.orderBy([...currentStopTimes[i], ...newStopTimes[i]], ['serviceDay', 'realtimeArrival'])
       }

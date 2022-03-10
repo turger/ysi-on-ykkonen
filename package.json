@@ -4,18 +4,22 @@
   "private": true,
   "engines": {
     "npm": "7.8.0",
-    "node": "14.4.0"
+    "node": "14.17.0"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
-    "lodash": "^4.17.15",
-    "moment": "^2.24.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "buffer": "^6.0.3",
+    "classnames": "^2.3.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-emojione": "^5.0.1",
-    "react-scripts": "3.2.0",
-    "react-svg": "^11.0.19",
-    "whatwg-fetch": "^3.0.0",
+    "react-scripts": "5.0.0",
+    "react-svg": "^14.1.13",
+    "stream": "0.0.2",
+    "sunrise-sunset-js": "^2.2.1",
+    "timers": "^0.1.1",
+    "whatwg-fetch": "^3.6.2",
     "xml2js": "^0.4.23"
   },
   "scripts": {

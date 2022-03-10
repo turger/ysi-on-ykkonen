@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Emoji from './Emoji'
 import weatherEmojis from './weatherEmojis'
+import nightWeatherEmojis from './nightWeatherEmojis'
 import Arrow from './assets/up-arrow.svg'
 import './Weather.css'
 import { getFmiWeatherData } from './Requests'
-import { parseXmlWeatherData, formatTime } from './utils/utils'
+import {parseXmlWeatherData, formatTime, isNight} from './utils/utils'
 import {ReactSVG} from 'react-svg'
 
 class Weather extends Component {
@@ -40,23 +41,24 @@ class Weather extends Component {
       })
   }
 
-  chooseIcon(temp, icon) {
+  chooseIcon(temp, icon, now) {
     if (temp > 20 && icon === 1) {
       return ":sun_with_face:"
     } else if (temp <= -10 && icon >= 41 && icon <= 53) {
       return ":snowman2:"
     } else {
-      return weatherEmojis[icon] || ':poop:'
+      return (isNight(now) && nightWeatherEmojis[icon]) || weatherEmojis[icon] || ':poop:'
     }
   }
 
   renderWeatherItem(weather) {
     const key = weather.time + '-' + weather.windspeedms
+    const now = new Date()
     return (
       <div className="Weather__item__box" key={weather.time}>
         <div className="Weather__item__time">{ formatTime(weather.time)}</div>
         <div className="Weather__item__temp">{ Math.round(weather.temperature) }°</div>
-        <Emoji name={ this.chooseIcon(Math.round(weather.temperature), weather.weathersymbol3) }/>
+        <Emoji name={ this.chooseIcon(Math.round(weather.temperature), weather.weathersymbol3, now) }/>
         <div className="Weather__item__wind" key={key} ref={c => (this._windexes[key] = {direction: `${weather.winddirection}deg` || '0deg', obj: c})}>
           <div className="Weather__item__wind__ms">{ Math.round(weather.windspeedms) }</div>
           <ReactSVG

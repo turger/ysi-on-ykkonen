@@ -4,6 +4,7 @@ import { getBikes } from './Requests'
 import Circle from './assets/circle.svg'
 import './Bikes.css'
 import _ from 'lodash'
+import Emoji from './Emoji'
 
 class Bikes extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class Bikes extends Component {
   render() {
     const {bikesData, errorMessage} = this.state
     if (!bikesData) return null
+    console.log('bikesData', bikesData)
     return (
       <div className="Bikes">
         { errorMessage && <div>{errorMessage}</div> }
@@ -55,19 +57,20 @@ class Bikes extends Component {
             const bikesAvailable = _.get(bikesData, `${key}.bikesAvailable`)
             const spacesAvailable = _.get(bikesData, `${key}.spacesAvailable`)
             const percentage = Math.round((bikesAvailable/(bikesAvailable+spacesAvailable))*100) || 0
+            const isWinter = bikesAvailable === 0 && spacesAvailable === 0
             return (
               <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = {percentage, obj: c})}>
                 <ReactSVG
                   src={Circle}
                   className="Percentage__circle"
                 />
-
                 <div className="BikeStop__availability">
                   <div className="BikeStop__availability__name">
                     { key }
                   </div>
                   <div className="BikeStop__availability__amount">
-                    { bikesAvailable }
+                    {isWinter && <Emoji name=':snowman:'/>}
+                    {!isWinter && bikesAvailable }
                   </div>
                 </div>
               </div>
