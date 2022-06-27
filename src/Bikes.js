@@ -47,7 +47,6 @@ class Bikes extends Component {
   render() {
     const {bikesData, errorMessage} = this.state
     if (!bikesData) return null
-    console.log('bikesData', bikesData)
     return (
       <div className="Bikes">
         { errorMessage && <div>{errorMessage}</div> }
