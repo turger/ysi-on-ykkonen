@@ -1,8 +1,4 @@
 import moment from 'moment'
-import { getSunrise, getSunset } from 'sunrise-sunset-js'
-
-const xml2js = require('xml2js')
-const xmlParser = new xml2js.Parser()
 
 export const getTimeIfMoreThan60min = (minutesToDeparture, departureTimestamp) => {
   if (minutesToDeparture >= 60) {
@@ -29,48 +25,5 @@ export const minutesToDeparture = (departureTimestamp, serviceDay, currDate = ne
   return getTimeIfMoreThan60min(minutesToDeparture, departureTimestamp)
 }
 
-const parseXml = xml => {
-  const forecast = []
-  xml['wfs:FeatureCollection']['wfs:member'].forEach((memberElem) => {
-    const forecastElem = memberElem['BsWfs:BsWfsElement'][0]
-    const time = forecastElem['BsWfs:Time'][0]
-    const paramName = forecastElem['BsWfs:ParameterName'][0].toLowerCase()
-    const rawParamValue = forecastElem['BsWfs:ParameterValue'][0]
-    const paramValue = isNaN(rawParamValue) ? rawParamValue: parseFloat(rawParamValue)
-    const forecastItem = forecast.find(item => item.time === time)
-    if (forecastItem !== undefined) {
-      forecastItem[paramName] = paramValue
-    } else {
-      const paramObject = {
-        time,
-      }
-      paramObject[paramName] = paramValue
-      forecast.push(paramObject)
-    }
-  })
-  return forecast
-}
-
-export const parseXmlWeatherData = xmlText =>
-  new Promise((resolve, reject) => {
-    xmlParser.parseString(xmlText, (err, result) => {
-      if (err) {
-        reject(err)
-      }
-      resolve(parseXml(result))
-    })
-  })
-
-export const formatTime = timestamptxt => {
-  const time = moment(timestamptxt).format("HH:mm")
-  return time
-}
-
-const HELSINKI_LAT = 60.192059
-const HELSINKI_LNG = 24.945831
-export const isNight = date => {
-  const sunrise = getSunrise(HELSINKI_LAT, HELSINKI_LNG, new Date(date)).toISOString()
-  const sunset = getSunset(HELSINKI_LAT, HELSINKI_LNG, new Date(date)).toISOString()
-
-  return date < sunrise || date > sunset
-}
+export const formatTime = timestamptxt =>
+ moment(timestamptxt).format("HH:mm")

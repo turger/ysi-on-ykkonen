@@ -79,7 +79,8 @@
   z-index: 0;
 }
 
-.Weather__item .Emoji {
+.Weather_icon_svg {
   height: 20px;
-  padding-bottom: 5px;
+  padding-top: 1px;
+  margin-bottom: -2px;
 }

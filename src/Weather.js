@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
-import Emoji from './Emoji'
-import weatherEmojis from './weatherEmojis'
-import nightWeatherEmojis from './nightWeatherEmojis'
 import Arrow from './assets/up-arrow.svg'
 import './Weather.css'
-import { getFmiWeatherData } from './Requests'
-import {parseXmlWeatherData, formatTime, isNight} from './utils/utils'
+import { getYRWeatherData } from './Requests'
+import {formatTime} from './utils/utils'
 import {ReactSVG} from 'react-svg'
+import YrWeatherIcon from './YrWeatherIcon'
 
 class Weather extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      forecast: null,
+      yrforecast: null
     }
     this._windexes = {}
   }
@@ -32,35 +30,23 @@ class Weather extends Component {
   }
 
   getCurrentWeatherData() {
-    getFmiWeatherData()
+    getYRWeatherData()
       .then(data => {
-        parseXmlWeatherData(data)
-          .then(forecast => {
-            this.setState({ forecast })
-          })
+        this.setState({ yrforecast: JSON.parse(data) })
       })
   }
 
-  chooseIcon(temp, icon, now) {
-    if (temp > 20 && icon === 1) {
-      return ":sun_with_face:"
-    } else if (temp <= -10 && icon >= 41 && icon <= 53) {
-      return ":snowman2:"
-    } else {
-      return (isNight(now) && nightWeatherEmojis[icon]) || weatherEmojis[icon] || ':poop:'
-    }
-  }
-
   renderWeatherItem(weather) {
-    const key = weather.time + '-' + weather.windspeedms
-    const now = new Date()
+    const details = _.get(weather, 'data.instant.details')
+    const key = weather.time
+    const symbol = _.get(weather, 'data.next_1_hours.summary.symbol_code')
     return (
-      <div className="Weather__item__box" key={weather.time}>
+      <div className="Weather__item__box" key={key}>
         <div className="Weather__item__time">{ formatTime(weather.time)}</div>
-        <div className="Weather__item__temp">{ Math.round(weather.temperature) }°</div>
-        <Emoji name={ this.chooseIcon(Math.round(weather.temperature), weather.weathersymbol3, now) }/>
-        <div className="Weather__item__wind" key={key} ref={c => (this._windexes[key] = {direction: `${weather.winddirection}deg` || '0deg', obj: c})}>
-          <div className="Weather__item__wind__ms">{ Math.round(weather.windspeedms) }</div>
+        <div className="Weather__item__temp">{ Math.round(details.air_temperature) }°</div>
+        <YrWeatherIcon name={symbol} />
+        <div className="Weather__item__wind" key={key} ref={c => (this._windexes[key] = {direction: `${details.wind_from_direction}deg` || '0deg', obj: c})}>
+          <div className="Weather__item__wind__ms">{ Math.round(details.wind_speed) }</div>
           <ReactSVG
             src={Arrow}
             className="Direction__arrow"
@@ -71,12 +57,13 @@ class Weather extends Component {
   }
 
   render() {
-    const {forecast} = this.state
-    if (!forecast) return null
+    const {yrforecast} = this.state
+    if (!yrforecast) return null
+    const timeseries = _.get(yrforecast, 'properties.timeseries')
     return (
       <div className="Weather">
          <div className="Weather__item">
-           { forecast
+           { timeseries
               .filter((w, key) => key % 3 === 0)
               .slice(0, 8)
               .map(weather => this.renderWeatherItem(weather))

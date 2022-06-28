@@ -17,10 +17,8 @@
     "react-scripts": "5.0.1",
     "react-svg": "^15.0.4",
     "stream": "0.0.2",
-    "sunrise-sunset-js": "^2.2.1",
     "timers": "^0.1.1",
-    "whatwg-fetch": "^3.6.2",
-    "xml2js": "^0.4.23"
+    "whatwg-fetch": "^3.6.2"
   },
   "scripts": {
     "start": "react-scripts start",
