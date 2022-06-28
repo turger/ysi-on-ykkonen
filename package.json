@@ -27,7 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=node",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "deploy-fb": "yarn build && firebase deploy"
   },
   "browserslist": {
     "production": [

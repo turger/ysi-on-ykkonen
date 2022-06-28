@@ -8,7 +8,7 @@ Raspberry Pi kiosk screen for 480x320 sized screen containing:
 ## Getting started
 
 ### Create .env file
-Create .env file to project root and add stops information to it. See example in .env.dist`
+Create `.env` file to project root and add stops information to it. See example in `.env.dist`
 
 ### Public transportation
 Get your selected public transportation stop gtfsId:s and city bike stop stationId:s from HSL API.
@@ -27,11 +27,11 @@ First clone project then
 `yarn`  
 `yarn start`
 
-## Deploy to heroku
+## Deploy to Firebase
 
-`heroku git:remote -a heroku-app-name`  
-`git push heroku master`
+`firebase init` add hosting
+`yarn deploy-fb`
 
 ## Example
 
-Check out app running here http://ysi-on-ykkonen.herokuapp.com/
+Check out app running [here]: https://ysi-on-ykkonen.web.app/
