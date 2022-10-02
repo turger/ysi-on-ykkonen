@@ -1,43 +1,43 @@
-import React, { Component } from 'react'
-import './DateTime.css'
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
+import Emoji from './Emoji'
+import './DateTime.css'
 
-class DateTime extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      time: null,
-      date: null
-    }
-  }
+const DateTime = ({ umbrella }) => {
+  const [time, setTime] = useState(null)
+  const [date, setDate] = useState(null)
 
-  componentDidMount() {
-    this.setTime()
+  useEffect(() => {
+    setTimeAndDate()
     setInterval(() => {
-      this.setTime()
-    } , 1000)
+      setTimeAndDate()
+    }, 1000)
+  }, [])
+
+  const setTimeAndDate = () => {
+    setTime(moment().format("HH:mm"))
+    setDate(moment().format("DD.MM.YYYY"))
   }
 
-  setTime() {
-    this.setState({
-      time: moment().format('HH:mm'),
-      date: moment().format('DD.MM.YYYY')
-    })
-  }
-
-  render() {
-    if (!this.state.date && !this.state.time) return null
-    return (
-      <div className="DateTime">
-        <div className="DateTime__time">
-        { this.state.time }
-        </div>
-        <div className="DateTime__date">
-          { this.state.date }
-        </div>
+  if (!date && !time) return null
+  return (
+    <div className="DateTime">
+      <div className="DateTime__time">{time}</div>
+      <div className="DateTime__date">
+        {date}
+        {umbrella && (
+          <div className="DateTime__umbrella">
+            <Emoji name=":umbrella:" />
+          </div>
+        )}
       </div>
-    )
-  }
+    </div>
+  )
+}
+
+DateTime.propTypes = {
+  setUumbrellambrella: PropTypes.bool,
 }
 
 export default DateTime

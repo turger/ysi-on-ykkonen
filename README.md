@@ -27,9 +27,13 @@ First clone project then
 `yarn`  
 `yarn start`
 
+## Init Firebase
+
+`npm install -g firebase-tools`
+`firebase login`
+`firebase init` add hosting
 ## Deploy to Firebase
 
-`firebase init` add hosting
 `yarn deploy-fb`
 
 ## Example
