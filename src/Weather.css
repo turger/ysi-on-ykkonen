@@ -35,6 +35,10 @@
   color: #e7d4f7;
 }
 
+.Weather__item__temp--raining {
+  color: #8075FF;
+}
+
 .Weather__item__wind {
   position: relative;
   display: flex;

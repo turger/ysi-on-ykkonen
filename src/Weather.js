@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import Arrow from './assets/up-arrow.svg'
 import { getYRWeatherData } from './Requests'
 import { formatTime } from './utils/utils'
@@ -46,10 +47,11 @@ const Weather = ({ setUmbrella }) => {
     const details = _.get(weather, "data.instant.details")
     const key = weather.time
     const symbol = _.get(weather, "data.next_1_hours.summary.symbol_code")
+    const raining = symbol.toLowerCase().includes("rain")
     return (
       <div className="Weather__item__box" key={key}>
         <div className="Weather__item__time">{formatTime(weather.time)}</div>
-        <div className="Weather__item__temp">
+        <div className={classNames("Weather__item__temp", { "Weather__item__temp--raining": raining })}>
           {Math.round(details.air_temperature)}°
         </div>
         <YrWeatherIcon name={symbol} />
