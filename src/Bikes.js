@@ -56,13 +56,14 @@ class Bikes extends Component {
             const bikesAvailable = _.get(bikesData, `${key}.bikesAvailable`)
             const spacesAvailable = _.get(bikesData, `${key}.spacesAvailable`)
             const percentage = Math.round((bikesAvailable/(bikesAvailable+spacesAvailable))*100) || 0
-            const isWinter = bikesAvailable === 0 && spacesAvailable === 0
+            const currentMonth = new Date().getMonth() + 1
+            const isWinter = currentMonth > 10 || currentMonth < 4
             return (
               <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = {percentage, obj: c})}>
-                <ReactSVG
+                {!isWinter && <ReactSVG
                   src={Circle}
                   className="Percentage__circle"
-                />
+                />}
                 <div className="BikeStop__availability">
                   <div className="BikeStop__availability__name">
                     { key }
