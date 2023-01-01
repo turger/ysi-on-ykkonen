@@ -31,7 +31,9 @@ First clone project then
 
 `npm install -g firebase-tools`
 `firebase login`
-`firebase init` add hosting
+`firebase init` add hosting and public directory `build`
+
+Change firebase project `firebase use <project_id>`
 ## Deploy to Firebase
 
 `yarn deploy-fb`
