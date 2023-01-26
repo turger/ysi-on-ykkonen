@@ -49,6 +49,26 @@ export const getBikes = (id) => doQuery(`
   }`
 ).then(res => res.data.bikeRentalStation)
 
+export const getExtensionConnection = (stopId, patternId, startTime = getCurrentTimestamp()) => 
+  doQuery(`
+  {
+    stop(id: "${stopId}") {
+      gtfsId
+      name
+      stopTimesForPattern(
+        id: "${patternId}", 
+        startTime: "${startTime}",
+        numberOfDepartures: 5,
+        omitCanceled: true
+      ) {
+        realtimeArrival,
+        headsign,
+        serviceDay
+      }
+    }
+  }  
+  `).then(res => res.data.stop)
+
 export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =>
   doQuery(`
   {

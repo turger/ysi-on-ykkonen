@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import './Stops.css'
 import Stop from './Stop'
-import { getSchedulesForStop } from './Requests'
+import { getSchedulesForStop, getExtensionConnection } from './Requests'
 
 class Stops extends Component {
   constructor(props) {
@@ -25,6 +25,7 @@ class Stops extends Component {
     if (_.isEmpty(stopIds)) this.setState({errorMessage: 'No stops found!'})
     stopIds.forEach((stopId,i) => {
       if (stopId.includes('-')) {
+        // There's actually many stops to be merged in one spot
         stopId.split('-').forEach(stopId => this.getSchedules(stopId, i, {merge: true}))
       } else {
         this.getSchedules(stopId, i)
@@ -32,10 +33,25 @@ class Stops extends Component {
     })
   }
 
-  getSchedules = (stopId, i, {merge = false} = {}) => {
+  getExtensionConnectionSchedules = async () => {
+    const stopId = process.env.REACT_APP_EXTENSION_CONNECTION_STOP
+    const patternId = process.env.REACT_APP_EXTENSION_CONNECTION_PATTERN
+    return getExtensionConnection(stopId, patternId)
+  }
+
+  getSchedules = async (stopId, i, {merge = false} = {}) => {
+    const connFor = process.env.REACT_APP_EXTENSION_CONNECTION_FOR_STOP
+    let connectionData
+    if (_.isEqual(stopId, connFor)) {
+      connectionData = await this.getExtensionConnectionSchedules()
+    }
+
     getSchedulesForStop(stopId).then(stopTimes => {
       const stopsData = this.state.stopsData
       stopsData[i] = merge ? this.mergeStops(stopsData[i], stopTimes) : stopTimes
+      if (!_.isEmpty(connectionData)) {
+        stopsData[i]['extensionConnection'] = connectionData.stopTimesForPattern
+      }
       this.setState({ stopsData })
     })
   }
@@ -65,7 +81,7 @@ class Stops extends Component {
           .map( key =>
             <div className="Stops__box" key={key}>
               {stopsData[key] &&
-                <Stop stops={stopsData[key].stoptimesWithoutPatterns} directions={stopsData[key].patterns}/>
+                <Stop stops={stopsData[key].stoptimesWithoutPatterns} directions={stopsData[key].patterns} extensionConnection={stopsData[key].extensionConnection}/>
               }
             </div>
           )

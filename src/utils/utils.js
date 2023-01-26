@@ -27,3 +27,14 @@ export const minutesToDeparture = (departureTimestamp, serviceDay, currDate = ne
 
 export const formatTime = timestamptxt =>
  moment(timestamptxt).format("HH:mm")
+
+export const extensionConnectionSuitable = (extensionConnection, timeToDeparture) => {
+  if (_.isEmpty(extensionConnection)) return false
+  const connectionMinMinutes = Number(process.env.REACT_APP_EXTENSION_CONNECTION_MINUTES_BETWEEN)
+  const connectionMaxWait = Number(process.env.REACT_APP_EXTENSION_CONNECTION_WAIT_MAX)
+  return extensionConnection.some(conn => {
+    const connectionDeparture = minutesToDeparture(conn.realtimeArrival, conn.serviceDay)
+    const minutesBetweenDepartures = connectionDeparture - timeToDeparture
+    return minutesBetweenDepartures >= connectionMinMinutes && minutesBetweenDepartures <= connectionMinMinutes+connectionMaxWait
+  })
+}

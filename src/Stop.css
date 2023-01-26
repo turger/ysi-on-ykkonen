@@ -19,6 +19,17 @@
   text-align: center;
 }
 
+.Stop__route--number--extension::before{
+  content: '';
+  position: absolute;
+  display: inline-flex;
+  width: 25px;
+  height: 21px;
+  margin-left: -8px;
+  margin-top: 1px;
+  box-shadow: 0 0 5px #2c0734, inset 0 0 5px #2c0734;
+}
+
 .Stop__route--headsign {
   flex: 4;
   font-size: 14px;

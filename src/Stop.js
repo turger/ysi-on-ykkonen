@@ -1,9 +1,11 @@
+import _ from 'lodash'
 import React from 'react'
+import classNames from 'classnames'
 import './Stop.css'
-import { minutesToDeparture } from './utils/utils'
+import { extensionConnectionSuitable, minutesToDeparture } from './utils/utils'
 import Vehicle from './Vehicle'
 
-const Stop = ({stops, directions}) => (
+const Stop = ({stops, directions, extensionConnection}) => (
   <div className="Stop">
     {stops
       .filter(stopTime => {
@@ -13,10 +15,11 @@ const Stop = ({stops, directions}) => (
       .slice(0, 3)
       .map(stopTime => {
         const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
+        const suitableForExtensionConnection = extensionConnectionSuitable(extensionConnection, timeToDeparture)
         return(
           <div className="Stop__route" key={`${stopTime.trip.route.gtfsId}-${stopTime.realtimeArrival}`}>
             <Vehicle mode={ stopTime.trip.route.mode }/>
-            <div className="Stop__route--number">
+            <div className={classNames("Stop__route--number", {"Stop__route--number--extension": suitableForExtensionConnection})}>
               {stopTime.trip.route.shortName}
             </div>
             <div className="Stop__route--headsign">
