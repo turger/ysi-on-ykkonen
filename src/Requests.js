@@ -19,7 +19,8 @@ const doQuery = query => new Promise(resolve => {
   fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
     method: 'post',
     headers: {
-      'Content-Type': 'application/graphql'
+      'Content-Type': 'application/graphql',
+      'digitransit-subscription-key': process.env.REACT_APP_HSL_KEY
     },
     body: query
   })
@@ -49,7 +50,7 @@ export const getBikes = (id) => doQuery(`
   }`
 ).then(res => res.data.bikeRentalStation)
 
-export const getExtensionConnection = (stopId, patternId, startTime = getCurrentTimestamp()) => 
+export const getExtensionConnection = (stopId, patternId, startTime = getCurrentTimestamp()) =>
   doQuery(`
   {
     stop(id: "${stopId}") {
@@ -103,4 +104,4 @@ export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =
     }
   }
 }`
-).then(res => res.data.stop)
+  ).then(res => res.data.stop)

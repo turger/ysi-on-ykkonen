@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Arrow from './assets/up-arrow.svg'
-import { getYRWeatherData } from './Requests'
+import { getYRWeatherData } from './requests'
 import { formatTime } from './utils/utils'
 import { ReactSVG } from 'react-svg'
 import YrWeatherIcon from './YrWeatherIcon'
@@ -59,10 +59,10 @@ const Weather = ({ setUmbrella }) => {
           className="Weather__item__wind"
           key={key}
           ref={(c) =>
-            (windexes[key] = {
-              direction: `${details.wind_from_direction}deg` || "0deg",
-              obj: c,
-            })
+          (windexes[key] = {
+            direction: `${details.wind_from_direction}deg` || "0deg",
+            obj: c,
+          })
           }
         >
           <div className="Weather__item__wind__ms">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ReactSVG } from 'react-svg'
-import { getBikes } from './Requests'
+import { getBikes } from './requests'
 import Circle from './assets/circle.svg'
 import './Bikes.css'
 import _ from 'lodash'
@@ -20,7 +20,7 @@ class Bikes extends Component {
     this.getBikesData()
     setInterval(() => {
       this.getBikesData()
-    } , 60000)
+    }, 60000)
   }
 
   componentDidUpdate() {
@@ -32,7 +32,7 @@ class Bikes extends Component {
 
   getBikesData() {
     const bikeStopIds = process.env.REACT_APP_BIKE_STOP_IDS ? process.env.REACT_APP_BIKE_STOP_IDS.split(',') : []
-    if (_.isEmpty(bikeStopIds)) this.setState({errorMessage: 'No stops found!'})
+    if (_.isEmpty(bikeStopIds)) this.setState({ errorMessage: 'No stops found!' })
     bikeStopIds.forEach(pair => {
       const name = pair.split(':')[0]
       const id = pair.split(':')[1]
@@ -45,32 +45,32 @@ class Bikes extends Component {
   }
 
   render() {
-    const {bikesData, errorMessage} = this.state
+    const { bikesData, errorMessage } = this.state
     if (!bikesData) return null
     return (
       <div className="Bikes">
-        { errorMessage && <div>{errorMessage}</div> }
-        { Object.keys(bikesData)
+        {errorMessage && <div>{errorMessage}</div>}
+        {Object.keys(bikesData)
           .sort((a, b) => a > b)
-          .map( key => {
+          .map(key => {
             const bikesAvailable = _.get(bikesData, `${key}.bikesAvailable`)
             const spacesAvailable = _.get(bikesData, `${key}.spacesAvailable`)
-            const percentage = Math.round((bikesAvailable/(bikesAvailable+spacesAvailable))*100) || 0
+            const percentage = Math.round((bikesAvailable / (bikesAvailable + spacesAvailable)) * 100) || 0
             const currentMonth = new Date().getMonth() + 1
             const isWinter = currentMonth > 10 || currentMonth < 4
             return (
-              <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = {percentage, obj: c})}>
+              <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = { percentage, obj: c })}>
                 {!isWinter && <ReactSVG
                   src={Circle}
                   className="Percentage__circle"
                 />}
                 <div className="BikeStop__availability">
                   <div className="BikeStop__availability__name">
-                    { key }
+                    {key}
                   </div>
                   <div className="BikeStop__availability__amount">
-                    {isWinter && <Emoji name=':snowman:'/>}
-                    {!isWinter && bikesAvailable }
+                    {isWinter && <Emoji name=':snowman:' />}
+                    {!isWinter && bikesAvailable}
                   </div>
                 </div>
               </div>
