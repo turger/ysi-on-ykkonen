@@ -31,8 +31,9 @@
 }
 
 .Stop__route--headsign {
-  flex: 4;
+  flex: 5;
   font-size: 14px;
+  white-space: nowrap;
 }
 
 .Stop__route--time {
