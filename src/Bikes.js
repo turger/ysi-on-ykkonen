@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { ReactSVG } from 'react-svg'
+import _ from 'lodash'
 import { getBikes } from './requests'
 import Circle from './assets/circle.svg'
-import './Bikes.css'
-import _ from 'lodash'
 import Emoji from './Emoji'
+import styles from './Bikes.module.css'
 
 class Bikes extends Component {
   constructor(props) {
@@ -48,7 +48,7 @@ class Bikes extends Component {
     const { bikesData, errorMessage } = this.state
     if (!bikesData) return null
     return (
-      <div className="Bikes">
+      <div className={styles.Bikes}>
         {errorMessage && <div>{errorMessage}</div>}
         {Object.keys(bikesData)
           .sort((a, b) => a > b)
@@ -59,16 +59,15 @@ class Bikes extends Component {
             const currentMonth = new Date().getMonth() + 1
             const isWinter = currentMonth > 10 || currentMonth < 4
             return (
-              <div className="BikeStop" key={key} ref={c => (this._bikesBoxes[key] = { percentage, obj: c })}>
+              <div className={styles.BikeStop} key={key} ref={c => (this._bikesBoxes[key] = { percentage, obj: c })}>
                 {!isWinter && <ReactSVG
                   src={Circle}
-                  className="Percentage__circle"
                 />}
-                <div className="BikeStop__availability">
-                  <div className="BikeStop__availability__name">
+                <div className={styles.Availability}>
+                  <div className={styles.AvailabilityName}>
                     {key}
                   </div>
-                  <div className="BikeStop__availability__amount">
+                  <div className={styles.AvailabilityAmount}>
                     {isWinter && <Emoji name=':snowman:' />}
                     {!isWinter && bikesAvailable}
                   </div>

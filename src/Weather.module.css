@@ -9,7 +9,7 @@
   font-weight: 900;
 }
 
-.Weather__item {
+.WeatherItem {
   display: flex;
   flex: 3;
   flex-flow: row;
@@ -18,28 +18,28 @@
   align-items: flex-end;
 }
 
-.Weather__item__box {
+.WeatherBox {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.Weather__item__time {
+.Time {
   font-size: 14px;
   color: #cea8f0;
 }
 
-.Weather__item__temp {
+.Temp {
   font-size: 18px;
   color: #e7d4f7;
 }
 
-.Weather__item__temp--raining {
+.Raining {
   color: #8075FF;
 }
 
-.Weather__item__wind {
+.Wind {
   position: relative;
   display: flex;
   align-items: center;
@@ -49,7 +49,7 @@
   height: 20px;
 }
 
-.Weather__item__wind__ms {
+.WindMS {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,14 +65,14 @@
   z-index: 1;
 }
 
-.Direction__arrow {
+.DirectionArrow {
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.arrow {
+.DirectionArrow svg {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,10 +81,4 @@
   fill: #e7d4f7;
   transform: rotate(var(--deg));
   z-index: 0;
-}
-
-.Weather_icon_svg {
-  height: 20px;
-  padding-top: 1px;
-  margin-bottom: -2px;
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import './Stops.css'
 import Stop from './Stop'
 import { getSchedulesForStop, getExtensionConnection } from './requests'
+import styles from './Stops.module.css'
 
 class Stops extends Component {
   constructor(props) {
@@ -74,12 +74,12 @@ class Stops extends Component {
     const { stopsData, errorMessage } = this.state
     if (!stopsData) return null
     return (
-      <div className="Stops">
+      <div className={styles.Stops}>
         {errorMessage && <div>{errorMessage}</div>}
         {Object.keys(stopsData)
           .sort((a, b) => a > b)
           .map(key =>
-            <div className="Stops__box" key={key}>
+            <div className={styles.Box} key={key}>
               {stopsData[key] &&
                 <Stop stops={stopsData[key].stoptimesWithoutPatterns} directions={stopsData[key].patterns} extensionConnection={stopsData[key].extensionConnection} />
               }

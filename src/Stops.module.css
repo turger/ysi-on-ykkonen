@@ -6,7 +6,7 @@
   font-weight: 900;
 }
 
-.Stops__box {
+.Box {
   align-items: center;
   background: linear-gradient(27deg, rgba(164,26,133,1) 0%, rgba(230,18,103,1) 69%);
   padding: 5px;
@@ -14,7 +14,7 @@
   width: 100%;
 }
 
-.Stops__box:first-child {
+.Box:first-child {
   margin: 5px 5px 5px 10px;
   background: linear-gradient(27deg, rgba(85,12,130,1) 0%, rgba(129,18,142,1) 69%);
 }

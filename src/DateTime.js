@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import Emoji from './Emoji'
-import './DateTime.css'
+import styles from './DateTime.module.css'
 
 const DateTime = ({ umbrella }) => {
   const [time, setTime] = useState(null)
@@ -22,12 +22,12 @@ const DateTime = ({ umbrella }) => {
 
   if (!date && !time) return null
   return (
-    <div className="DateTime">
-      <div className="DateTime__time">{time}</div>
-      <div className="DateTime__date">
+    <div className={styles.DateTime}>
+      <div className={styles.Time}>{time}</div>
+      <div className={styles.Date}>
         {date}
         {umbrella && (
-          <div className="DateTime__umbrella">
+          <div className={styles.Umbrella}>
             <Emoji name=":umbrella:" />
           </div>
         )}

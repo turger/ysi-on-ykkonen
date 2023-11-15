@@ -2,11 +2,11 @@
   justify-self: center;
 }
 
-.Vehicle__icon__svg {
+.SvgIcon {
   margin-bottom: -5px;
   width: 13px;
 }
 
-.Vehicle__icon__svg path {
+.SvgIcon path {
   fill: #ffffff !important;
 }
