@@ -15,15 +15,16 @@ const Stop = ({stops, directions, extensionConnection}) => (
       .slice(0, 3)
       .map(stopTime => {
         const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
-        const suitableForExtensionConnection = extensionConnectionSuitable(extensionConnection, timeToDeparture)
+        const routeShortName = stopTime.trip.route.shortName
+        const suitableForExtensionConnection = extensionConnectionSuitable(extensionConnection, timeToDeparture, routeShortName)
         return(
           <div className={styles.Route} key={`${stopTime.trip.route.gtfsId}-${stopTime.realtimeArrival}`}>
             <Vehicle mode={ stopTime.trip.route.mode }/>
             <div className={classNames(styles.RouteNumber, {[styles.ExtensionConnection]: suitableForExtensionConnection})}>
-              {stopTime.trip.route.shortName}
+              {routeShortName}
             </div>
             <div className={styles.Headsign}>
-              {directions.find(direction => direction.route.shortName === stopTime.trip.route.shortName).headsign}
+              {directions.find(direction => direction.route.shortName === routeShortName).headsign}
             </div>
             <div className={styles.Time}>
                 { timeToDeparture }
