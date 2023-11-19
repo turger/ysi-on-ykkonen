@@ -1,94 +1,130 @@
-import React, { Component } from 'react'
+import React, {useEffect, useState} from 'react'
 import _ from 'lodash'
-import './Stops.css'
 import Stop from './Stop'
-import { getSchedulesForStop, getExtensionConnection } from './requests'
+import {getSchedulesForStop, getExtensionConnection} from './requests'
+import styles from './Stops.module.css'
 
-class Stops extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      stopsData: {},
-      errorMessage: null,
-    }
-  }
+const getExtensionConnectionSchedules = async () => {
+  const stopId = process.env.REACT_APP_EXTENSION_CONNECTION_STOP
+  const patternId = process.env.REACT_APP_EXTENSION_CONNECTION_PATTERN
+  return getExtensionConnection(stopId, patternId)
+}
 
-  componentDidMount() {
-    this.getStopsData()
-    setInterval(() => {
-      this.getStopsData()
-    }, 60000)
-  }
+const Stops = () => {
+  const [stopsData, setStopsData] = useState({})
+  const [schedules, setSchedules] = useState([])
+  const [extensionConnections, setExtensionConnections] = useState([])
+  const [errorMessage, setErrorMessage] = useState(null)
 
-  getStopsData() {
-    const stopIds = process.env.REACT_APP_STOP_IDS ? process.env.REACT_APP_STOP_IDS.split(',') : []
-    if (_.isEmpty(stopIds)) this.setState({ errorMessage: 'No stops found!' })
-    stopIds.forEach((stopId, i) => {
-      if (stopId.includes('-')) {
-        // There's actually many stops to be merged in one spot
-        stopId.split('-').forEach(stopId => this.getSchedules(stopId, i, { merge: true }))
-      } else {
-        this.getSchedules(stopId, i)
+  const getSchedulesForStops = async () => {
+    const stopIdsList = process.env.REACT_APP_STOP_IDS ? process.env.REACT_APP_STOP_IDS.split(',') : []
+    const stopIds = stopIdsList.map(stopId => {
+      // If there's actually many stops to be merged in one spot
+      if (stopId.includes('+')) {
+        return stopId.split('+')
       }
-    })
-  }
+      return stopId
+    }).flat()
 
-  getExtensionConnectionSchedules = async () => {
-    const stopId = process.env.REACT_APP_EXTENSION_CONNECTION_STOP
-    const patternId = process.env.REACT_APP_EXTENSION_CONNECTION_PATTERN
-    return getExtensionConnection(stopId, patternId)
-  }
+    const extensionConnectionPromises = stopIds.map(stopId => {
+      const connFor = process.env.REACT_APP_EXTENSION_CONNECTION_FOR_STOP
+      if (_.isEqual(stopId, connFor)) {
+        return getExtensionConnectionSchedules()
+      }
+    }).filter(promise => promise)
 
-  getSchedules = async (stopId, i, { merge = false } = {}) => {
-    const connFor = process.env.REACT_APP_EXTENSION_CONNECTION_FOR_STOP
-    let connectionData
-    if (_.isEqual(stopId, connFor)) {
-      connectionData = await this.getExtensionConnectionSchedules()
+    const extensionConnectionData = await Promise.all(extensionConnectionPromises)
+    if (extensionConnectionData) {
+      setExtensionConnections(extensionConnectionData)
     }
 
-    getSchedulesForStop(stopId).then(stopTimes => {
-      const stopsData = this.state.stopsData
-      stopsData[i] = merge ? this.mergeStops(stopsData[i], stopTimes) : stopTimes
+    const schedulePromises = stopIds.map(stopId => getSchedulesForStop(stopId))
+      .filter(schedule => schedule)
+    const schedulesData = await Promise.all(schedulePromises)
+    if (schedulesData) {
+      setSchedules(schedulesData.filter(schedule => schedule))
+    }
+  }
+
+  useEffect(() => {
+    const getSchedules = async () => {
+      await getSchedulesForStops()
+    }
+
+    getSchedules()
+
+    const interval = setInterval(() => {
+      getSchedules()
+    }, 60000) // 60000 = 1 min
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
+  const getExtensionConnectionForStop = (stopId) => {
+    const connForStopId = process.env.REACT_APP_EXTENSION_CONNECTION_FOR_STOP
+    const connStopId = process.env.REACT_APP_EXTENSION_CONNECTION_STOP
+    if (_.isEqual(stopId, connForStopId)) {
+      const connectionData = extensionConnections.find(connection => connection.gtfsId === connStopId)
+
       if (!_.isEmpty(connectionData)) {
-        stopsData[i]['extensionConnection'] = connectionData.stopTimesForPattern
+        return connectionData.stopTimesForPattern
       }
-      this.setState({ stopsData })
-    })
+    }
+    return undefined
   }
 
-  mergeStops = (currentStopTimes, newStopTimes) => {
-    if (!currentStopTimes || _.isEmpty(newStopTimes)) return newStopTimes
-    if (_.get(currentStopTimes, 'gtfsId').includes(_.get(newStopTimes, 'gtfsId'))) return newStopTimes
-    const mergedStopTimes = {}
-    Object.keys(newStopTimes).forEach(i => {
-      if (typeof newStopTimes[i] === 'string') {
-        mergedStopTimes[i] = `${newStopTimes[i]};${currentStopTimes[i]}`
-      } else {
-        mergedStopTimes[i] = _.orderBy([...currentStopTimes[i], ...newStopTimes[i]], ['serviceDay', 'realtimeArrival'])
-      }
-    })
-    return mergedStopTimes
-  }
+  const getStopsData = () => {
+    const stopIdsLists = process.env.REACT_APP_STOP_IDS ? process.env.REACT_APP_STOP_IDS.split(',') : []
+    if (_.isEmpty(stopIdsLists)) setErrorMessage('No stops found!')
+    return stopIdsLists.map((stopId, i) => {
+      if (stopId.includes('+')) {
+        // There's actually many stops to be merged in one spot
+        const stopIds = stopId.split('+')
+        const schedulesToMerge = stopIds.map(stopId => schedules.find(schedule => schedule.gtfsId === stopId)).filter(sched => sched)
 
-  render() {
-    const { stopsData, errorMessage } = this.state
-    if (!stopsData) return null
-    return (
-      <div className="Stops">
-        {errorMessage && <div>{errorMessage}</div>}
-        {Object.keys(stopsData)
-          .sort((a, b) => a > b)
-          .map(key =>
-            <div className="Stops__box" key={key}>
-              {stopsData[key] &&
-                <Stop stops={stopsData[key].stoptimesWithoutPatterns} directions={stopsData[key].patterns} extensionConnection={stopsData[key].extensionConnection} />
-              }
-            </div>
-          )
+        if (_.isEmpty(schedulesToMerge)) return null
+
+        const stopTimes = schedulesToMerge.map(schedule => schedule.stoptimesWithoutPatterns).flat()
+        const orderedStopTimes = _.orderBy(stopTimes, ['serviceDay', 'realtimeArrival'])
+        // Return merged
+        return {
+          name: schedulesToMerge.map(schedule => schedule.name).join(';'),
+          gtfsId: schedulesToMerge.map(schedule => schedule.gtfsId).join(';'),
+          patterns: schedulesToMerge.map(schedule => schedule.patterns).flat(),
+          stoptimesWithoutPatterns: orderedStopTimes,
+          extensionConnection: schedulesToMerge
+            .map(schedule => getExtensionConnectionForStop(schedule.gtfsId))
+            .flat()
+            .filter(connection => connection)
         }
-      </div>
-    )
+      } else {
+        const scheds = schedules.find(schedule => schedule.gtfsId === stopId)
+        scheds['extensionConnection'] = getExtensionConnectionForStop(stopId)
+        return scheds
+      }
+    })
   }
+
+  useEffect(() => {
+    if (_.isEmpty(schedules)) return
+
+    const stopsData = getStopsData()
+    setStopsData(stopsData)
+  }, [schedules, extensionConnections])
+
+  if (!stopsData) return null
+
+  return (<div className={styles.Stops}>
+    {errorMessage && <div>{errorMessage}</div>}
+    {Object.keys(stopsData)
+      .sort((a, b) => a > b)
+      .map(key => <div className={styles.Box} key={key}>
+        {stopsData[key] && <Stop stops={stopsData[key].stoptimesWithoutPatterns} directions={stopsData[key].patterns}
+                                 extensionConnection={stopsData[key].extensionConnection}/>}
+      </div>)}
+  </div>)
 
 }
 

@@ -15,7 +15,7 @@
   position: relative;
 }
 
-.BikeStop__availability {
+.Availability {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -30,23 +30,23 @@
   font-weight: 900;
 }
 
-.BikeStop__availability__name {
+.AvailabilityName {
   font-size: 12px;
   padding-bottom: 1px;
 }
 
-.BikeStop__availability__amount {
+.AvailabilityAmount {
   font-size: 18px;
 }
 
-.circular-chart {
+.CircularChart {
   display: block;
   margin: 8px auto;
   max-height: 80px;
   max-width: 80%;
 }
 
-.circle {
+.Circle {
   stroke: #acecec;
   fill: none;
   stroke-width: 2.8px;

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {ReactSVG} from 'react-svg'
+import styles from './YrWeatherIcon.module.css'
 
 const importAll = (r) => {
   let images = {};
@@ -13,9 +14,8 @@ const YrWeatherIcon = ({name}) => {
   const image = images[`${name}.svg`]
   return <ReactSVG
       src={image}
-      className="Weather_icon"
       beforeInjection={(svg) => {
-        svg.classList.add('Weather_icon_svg')
+        svg.classList.add(styles.WeatherSvg)
         svg.setAttribute('style', 'height: 20px')
       }}
     />

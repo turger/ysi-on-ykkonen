@@ -1,16 +1,15 @@
 import React from 'react'
-import classNames from 'classnames'
 import { ReactSVG } from 'react-svg'
 import vehicleAssets from './VehicleAssets'
-import './Vehicle.css'
+import styles from './Vehicle.module.css'
 
 const Vehicle = ({mode}) => {
   return (
-    <div className={classNames("Vehicle", "Vehicle--"+mode)}>
+    <div className={styles.Vehicle}>
       { mode in vehicleAssets &&
         <ReactSVG
           src={vehicleAssets[mode]}
-          className="Vehicle__icon__svg"
+          className={styles.SvgIcon}
         />
       }
       { !(mode in vehicleAssets) && mode }

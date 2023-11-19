@@ -33,6 +33,7 @@ First clone project then
 `firebase login`
 `firebase init` add hosting and public directory `build`
 
+List projects `firebase projects:list`
 Change firebase project `firebase use <project_id>`
 ## Deploy to Firebase
 
