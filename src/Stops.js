@@ -122,7 +122,7 @@ const Stops = () => {
       .sort((a, b) => a > b)
       .map(key => <div className={styles.Box} key={key}>
         {stopsData[key] && <Stop stops={stopsData[key].stoptimesWithoutPatterns} directions={stopsData[key].patterns}
-                                 extensionConnection={stopsData[key].extensionConnection}/>}
+          extensionConnection={stopsData[key].extensionConnection} />}
       </div>)}
   </div>)
 

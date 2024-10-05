@@ -3,8 +3,8 @@
 }
 
 .Route {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 20px 45px 4fr 1fr;
   font-size: 16px;
   padding-bottom: 3px;
 }
@@ -14,12 +14,11 @@
 }
 
 .RouteNumber {
-  flex: 2;
   min-width: 30px;
   text-align: center;
 }
 
-.ExtensionConnection::before{
+.ExtensionConnection::before {
   content: '';
   position: absolute;
   display: inline-flex;
@@ -43,4 +42,3 @@
   text-align: end;
   font-size: 18px;
 }
-

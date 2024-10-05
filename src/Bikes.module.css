@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  background: rgba(18,135,183);
+  background: rgba(18, 135, 183);
   color: #ffffff;
   margin: 10px 10px 5px 5px;
   letter-spacing: 1px;
@@ -37,19 +37,5 @@
 
 .AvailabilityAmount {
   font-size: 18px;
-}
-
-.CircularChart {
-  display: block;
-  margin: 8px auto;
-  max-height: 80px;
-  max-width: 80%;
-}
-
-.Circle {
-  stroke: #acecec;
-  fill: none;
-  stroke-width: 2.8px;
-  stroke-linecap: round;
-  stroke-dasharray: var(--percentage), 100;
+  white-space: nowrap;
 }
