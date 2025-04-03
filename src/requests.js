@@ -16,7 +16,7 @@ const getCurrentTimestamp = () => {
 }
 
 const doQuery = query => new Promise(resolve => {
-  fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
+  fetch('https://api.digitransit.fi/routing/v2/hsl/gtfs/v1', {
     method: 'post',
     headers: {
       'Content-Type': 'application/graphql',
