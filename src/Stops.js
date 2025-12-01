@@ -107,14 +107,39 @@ const Stops = () => {
     })
   }
 
+  const filterStopsData = (stopsData) => {
+    // example REACT_APP_FILTER=1:56,2:6
+    // Split the filter string into key-object pairs: e.g. { 1: "56", 2: "6" }
+    const filters = process.env.REACT_APP_FILTER
+      ? process.env.REACT_APP_FILTER.split(',').reduce((acc, pair) => {
+        const [key, value] = pair.split(':');
+        if (key && value) acc[key.trim()] = value.trim();
+        return acc;
+      }, {})
+      : {};
+
+    const filteredStopsData = stopsData.map((stop, i) => {
+      // If index i is in filters, add a 'filter' key to the stop object
+      const filterValue = filters[i];
+      if (filterValue !== undefined) {
+        return {...stop, stoptimesWithoutPatterns: stop?.stoptimesWithoutPatterns?.filter(stopTime => stopTime.trip.route.shortName === filterValue) || []};
+      }
+      return stop;
+    });
+
+    return filteredStopsData;
+  }
+
   useEffect(() => {
     if (_.isEmpty(schedules)) return
 
     const stopsData = getStopsData()
-    setStopsData(stopsData)
+    const filteredStopsData = filterStopsData(stopsData)
+    setStopsData(filteredStopsData)
   }, [schedules, extensionConnections])
 
   if (!stopsData) return null
+
 
   return (<div className={styles.Stops}>
     {errorMessage && <div>{errorMessage}</div>}
