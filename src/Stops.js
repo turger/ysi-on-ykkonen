@@ -101,8 +101,10 @@ const Stops = () => {
         }
       } else {
         const scheds = schedules.find(schedule => schedule.gtfsId === stopId)
-        scheds['extensionConnection'] = getExtensionConnectionForStop(stopId)
-        return scheds
+        if (scheds) {
+          scheds.extensionConnection = getExtensionConnectionForStop(stopId)
+          return scheds
+        }
       }
     })
   }

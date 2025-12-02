@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Arrow from './assets/up-arrow.svg'
-import { getYRWeatherData } from './requests'
-import { formatTime } from './utils/utils'
-import { ReactSVG } from 'react-svg'
+import {getYRWeatherData} from './requests'
+import {formatTime} from './utils/utils'
+import {ReactSVG} from 'react-svg'
 import YrWeatherIcon from './YrWeatherIcon'
 import styles from './Weather.module.css'
 
-const Weather = ({ setUmbrella }) => {
+const Weather = ({setUmbrella}) => {
   const [yrForecast, setYrForecast] = useState(null)
 
   const windexes = useRef({})
@@ -51,7 +51,7 @@ const Weather = ({ setUmbrella }) => {
     return (
       <div className={styles.WeatherBox} key={key}>
         <div className={styles.Time}>{formatTime(weather.time)}</div>
-        <div className={classNames(styles.Temp, { [styles.Raining]: raining })}>
+        <div className={classNames(styles.Temp, {[styles.Raining]: raining})}>
           {Math.round(details.air_temperature)}°
         </div>
         <YrWeatherIcon name={symbol} />
