@@ -13,7 +13,9 @@ Create `.env` file to project root and add stops information to it. See example 
 ### Public transportation
 Get your selected public transportation stop gtfsId:s and city bike stop stationId:s from HSL API.
 
-Public transportation stops for example https://api.digitransit.fi/graphiql/hsl?query=%7B%0A%20%20stops(name%3A%20%22Lauttasaaren%20silta%22)%20%7B%0A%20%20%20%20gtfsId%2C%0A%20%20%20%20name%2C%0A%20%20%20%20code%0A%20%20%7D%0A%7D
+Public transportation stops for example:   
+Stops: https://api.digitransit.fi/graphiql/hsl?query=%7B%0A%20%20stops(name%3A%20%22Lauttasaaren%20silta%22)%20%7B%0A%20%20%20%20gtfsId%2C%0A%20%20%20%20name%2C%0A%20%20%20%20code%0A%20%20%7D%0A%7D  
+Stations: https://api.digitransit.fi/graphiql/hsl/v2/gtfs/v1?query=%257B%250A%2509stations%28name%253A%2520%2522Ruoholahden%2520metroasema%2522%29%2520%257B%250A%2520%2520%2520%2520gtfsId%250A%2520%2520%2520%2520name%250A%2520%2520%2520%2520lat%250A%2520%2520%2520%2520lon%250A%2520%2520%2520%2520stops%2520%257B%250A%2520%2520%2520%2520%2520%2520gtfsId%250A%2520%2520%2520%2520%2520%2520name%250A%2520%2520%2520%2520%2520%2520code%250A%2520%2520%2520%2520%2520%2520platformCode%250A%2520%2520%2520%2520%257D%250A%2520%2520%257D%250A%257D
 
 Bike stops
 https://api.digitransit.fi/graphiql/hsl?query=%7B%0A%20%20bikeRentalStations%20%7B%0A%20%20%20%20stationId%2C%0A%20%20%20%20name%0A%20%20%7D%0A%7D

@@ -50,26 +50,6 @@ export const getBikes = (id) => doQuery(`
   }`
 ).then(res => res.data.bikeRentalStation)
 
-export const getExtensionConnection = (stopId, patternId, startTime = getCurrentTimestamp()) =>
-  doQuery(`
-  {
-    stop(id: "${stopId}") {
-      gtfsId
-      name
-      stopTimesForPattern(
-        id: "${patternId}", 
-        startTime: "${startTime}",
-        numberOfDepartures: 5,
-        omitCanceled: true
-      ) {
-        realtimeArrival,
-        headsign,
-        serviceDay
-      }
-    }
-  }  
-  `).then(res => res.data.stop)
-
 export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =>
   doQuery(`
   {
@@ -84,21 +64,29 @@ export const getSchedulesForStop = (stopId, startTime = getCurrentTimestamp()) =
         shortName
       }
     }
-    stoptimesWithoutPatterns(
+    stoptimesForPatterns(
       startTime:"${startTime}",
       timeRange: 180000,
-      numberOfDepartures:15
+      numberOfDepartures: 30,
+      omitCanceled: true
     ) {
-      scheduledArrival
-      scheduledDeparture
-      realtimeArrival
-      serviceDay
-      trip {
-        route {
-          gtfsId
-          longName
-          shortName
-          mode
+      stoptimes {
+        scheduledArrival
+        realtimeArrival
+        scheduledDeparture
+        realtimeDeparture
+        stopPosition
+        realtime
+        realtimeState
+        serviceDay
+        headsign
+        trip {
+          route {
+            gtfsId
+            longName
+            shortName
+            mode
+          }
         }
       }
     }

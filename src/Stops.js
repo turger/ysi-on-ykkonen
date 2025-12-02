@@ -1,19 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import _ from 'lodash'
 import Stop from './Stop'
-import {getSchedulesForStop, getExtensionConnection} from './requests'
+import {getSchedulesForStop} from './requests'
 import styles from './Stops.module.css'
-
-const getExtensionConnectionSchedules = async () => {
-  const stopId = process.env.REACT_APP_EXTENSION_CONNECTION_STOP
-  const patternId = process.env.REACT_APP_EXTENSION_CONNECTION_PATTERN
-  return getExtensionConnection(stopId, patternId)
-}
 
 const Stops = () => {
   const [stopsData, setStopsData] = useState({})
   const [schedules, setSchedules] = useState([])
-  const [extensionConnections, setExtensionConnections] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
 
   const getSchedulesForStops = async () => {
@@ -25,18 +18,6 @@ const Stops = () => {
       }
       return stopId
     }).flat()
-
-    const extensionConnectionPromises = stopIds.map(stopId => {
-      const connFor = process.env.REACT_APP_EXTENSION_CONNECTION_FOR_STOP
-      if (_.isEqual(stopId, connFor)) {
-        return getExtensionConnectionSchedules()
-      }
-    }).filter(promise => promise)
-
-    const extensionConnectionData = await Promise.all(extensionConnectionPromises)
-    if (extensionConnectionData) {
-      setExtensionConnections(extensionConnectionData)
-    }
 
     const schedulePromises = stopIds.map(stopId => getSchedulesForStop(stopId))
       .filter(schedule => schedule)
@@ -62,17 +43,16 @@ const Stops = () => {
     }
   }, [])
 
-  const getExtensionConnectionForStop = (stopId) => {
-    const connForStopId = process.env.REACT_APP_EXTENSION_CONNECTION_FOR_STOP
-    const connStopId = process.env.REACT_APP_EXTENSION_CONNECTION_STOP
-    if (_.isEqual(stopId, connForStopId)) {
-      const connectionData = extensionConnections.find(connection => connection.gtfsId === connStopId)
-
-      if (!_.isEmpty(connectionData)) {
-        return connectionData.stopTimesForPattern
-      }
-    }
-    return undefined
+  const flattenStopTimes = (patterns) => {
+    return patterns.map(pattern => pattern.stoptimes).flat().map(st => ({
+      realtimeArrival: st.realtimeArrival,
+      serviceDay: st.serviceDay,
+      headsign: st.headsign,
+      gtfsId: st.trip.route.gtfsId,
+      longName: st.trip.route.longName,
+      shortName: st.trip.route.shortName,
+      mode: st.trip.route.mode
+    }))
   }
 
   const getStopsData = () => {
@@ -86,24 +66,23 @@ const Stops = () => {
 
         if (_.isEmpty(schedulesToMerge)) return null
 
-        const stopTimes = schedulesToMerge.map(schedule => schedule.stoptimesWithoutPatterns).flat()
-        const orderedStopTimes = _.orderBy(stopTimes, ['serviceDay', 'realtimeArrival'])
-        // Return merged
+        const stopTimes = schedulesToMerge.map(schedule => schedule.stoptimesForPatterns).flat()
+        const flatStopTimes = flattenStopTimes(stopTimes)
+        const orderedStopTimes = _.orderBy(flatStopTimes, ['serviceDay', 'realtimeArrival'])
         return {
           name: schedulesToMerge.map(schedule => schedule.name).join(';'),
-          gtfsId: schedulesToMerge.map(schedule => schedule.gtfsId).join(';'),
-          patterns: schedulesToMerge.map(schedule => schedule.patterns).flat(),
-          stoptimesWithoutPatterns: orderedStopTimes,
-          extensionConnection: schedulesToMerge
-            .map(schedule => getExtensionConnectionForStop(schedule.gtfsId))
-            .flat()
-            .filter(connection => connection)
+          flatStopTimes: orderedStopTimes
         }
       } else {
         const scheds = schedules.find(schedule => schedule.gtfsId === stopId)
-        if (scheds) {
-          scheds.extensionConnection = getExtensionConnectionForStop(stopId)
-          return scheds
+        if (!scheds) return null
+
+        const flatStopTimes = flattenStopTimes(scheds.stoptimesForPatterns)
+        const orderedStopTimes = _.orderBy(flatStopTimes, ['serviceDay', 'realtimeArrival'])
+
+        return {
+          name: scheds.name,
+          flatStopTimes: orderedStopTimes
         }
       }
     })
@@ -124,7 +103,7 @@ const Stops = () => {
       // If index i is in filters, add a 'filter' key to the stop object
       const filterValue = filters[i];
       if (filterValue !== undefined) {
-        return {...stop, stoptimesWithoutPatterns: stop?.stoptimesWithoutPatterns?.filter(stopTime => stopTime.trip.route.shortName === filterValue) || []};
+        return {...stop, flatStopTimes: stop?.flatStopTimes?.filter(stopTime => stopTime.shortName === filterValue) || []};
       }
       return stop;
     });
@@ -138,18 +117,16 @@ const Stops = () => {
     const stopsData = getStopsData()
     const filteredStopsData = filterStopsData(stopsData)
     setStopsData(filteredStopsData)
-  }, [schedules, extensionConnections])
+  }, [schedules])
 
   if (!stopsData) return null
-
 
   return (<div className={styles.Stops}>
     {errorMessage && <div>{errorMessage}</div>}
     {Object.keys(stopsData)
       .sort((a, b) => a > b)
       .map(key => <div className={styles.Box} key={key}>
-        {stopsData[key] && <Stop stops={stopsData[key].stoptimesWithoutPatterns} directions={stopsData[key].patterns}
-          extensionConnection={stopsData[key].extensionConnection} />}
+        {stopsData[key] && <Stop stops={stopsData[key].flatStopTimes} />}
       </div>)}
   </div>)
 
