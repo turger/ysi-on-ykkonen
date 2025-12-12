@@ -20,7 +20,11 @@ const parseFilters = () => {
   if (!process.env.REACT_APP_FILTER) return {}
   return process.env.REACT_APP_FILTER.split(',').reduce((acc, pair) => {
     const [key, value] = pair.split(':')
-    if (key && value) acc[key.trim()] = value.trim()
+    if (key && value) {
+      acc[key.trim()] = value.includes('+')
+        ? value.split('+').map(v => v.trim())
+        : [value.trim()]
+    }
     return acc
   }, {})
 }
@@ -69,7 +73,7 @@ const Stops = () => {
 
       const filterValue = filters[i]
       const filteredTimes = filterValue
-        ? flatStopTimes.filter(st => st.shortName === filterValue)
+        ? flatStopTimes.filter(st => filterValue.includes(st.shortName))
         : flatStopTimes
 
       return {
